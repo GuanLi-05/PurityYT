@@ -9,12 +9,83 @@ import {
   IconBrandOnlyfans,
 } from "@tabler/icons-react";
 
-export default function LoginForm() {
+export default function RegisterForm({setAlertShow, setAlertMessage}) {
+  const firstName = React.useRef();
+  const lastName = React.useRef();
+  const email = React.useRef();
+  const password = React.useRef();
+  const confirmPassword = React.useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
+
+    const fn = firstName.current.value?.trim();
+    console.log("First name: " + fn); // print debug
+    if (!checkFirstName(fn)) {
+      setAlertMessage("First names must be 2 to 15 characters long and may only contain letters, optionally separated by a single hyphen (-), apostrophe ('), or space.");
+      setAlertShow(true);
+      return;
+    } 
+
+    const ln = lastName.current.value?.trim();
+    console.log("Last name: " + ln); // print debug
+    if (!checkLastName(ln)) {
+      setAlertMessage("Last names must be 2 to 15 characters long and may only contain letters.");
+      setAlertShow(true);
+      return;
+    } 
+
+    const em = email.current.value?.trim();
+    console.log("Email: " + em); // print debug
+    if (!checkEmail(em)) {
+      setAlertMessage = "Invalid email.";
+      setAlertShow(true);
+      return;
+    } 
     
+    const pw = password.current.value?.trim();
+    console.log("Password: " + pw); // print debug
+    if (!checkPassword(pw)) {
+      setAlertMessage("Password must be longer than 8 characters. Passwords must contain a lowercase letter, an uppercase letter and a number.");
+      setAlertShow(true);
+      return;
+    } 
+
+    const cpw = confirmPassword.current.value?.trim();
+    console.log("Confirm: " + cpw); // print debug
+    if (!checkConfirm(pw, cpw)) {
+      setAlertMessage("Passwords do not match");
+      setAlertShow(true);
+      return;
+    } 
   };
+
+  ///////////////////////////////////
+  // Input Constraints
+  ///////////////////////////////////
+
+  const checkFirstName = (fn) => {
+    return (fn != null || undefined) && fn.length >= 2 && fn.length <= 15 && /^[a-zA-ZÀ-ÿ]+([ '-][a-zA-ZÀ-ÿ]+)*$/.test(fn);
+  }
+
+  const checkLastName = (ln) => {
+    return (ln != null || undefined) && ln.length >= 2 && ln.length <= 15 && /^[a-zA-ZÀ-ÿ]+$/.test(ln);
+  }
+
+  const checkEmail = (em) => {
+    return (em != null || undefined) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+  }
+
+  const checkPassword = (pw) => {
+    return (pw != null || undefined) && pw.length > 8 && /[a-z]+/.test(pw) && /[A-Z]+/.test(pw) && /[0-9]+/.test(pw) 
+  }
+
+  const checkConfirm = (pw, cpw) => {
+    return (cpw != null || undefined) && pw === cpw;
+  }
+
+  ///////////////////////////////////
+
   return (
     <div
       className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
@@ -30,24 +101,24 @@ export default function LoginForm() {
           className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Tyler" type="text" />
+            <Input id="firstname" placeholder="Tyler" type="text" ref={firstName}/>
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Durden" type="text" />
+            <Input id="lastname" placeholder="Durden" type="text" ref={lastName}/>
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email" ref={email} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" placeholder="••••••••" type="password" ref={password}/>
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="twitterpassword">Your twitter password</Label>
-          <Input id="twitterpassword" placeholder="••••••••" type="twitterpassword" />
+          <Input id="twitterpassword" placeholder="••••••••" type="twitterpassword" ref={confirmPassword}/>
         </LabelInputContainer>
 
         <button
