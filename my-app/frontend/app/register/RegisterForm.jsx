@@ -65,23 +65,23 @@ export default function RegisterForm({setAlertShow, setAlertMessage}) {
   ///////////////////////////////////
 
   const checkFirstName = (fn) => {
-    return (fn != null || undefined) && fn.length >= 2 && fn.length <= 15 && /^[a-zA-ZÀ-ÿ]+([ '-][a-zA-ZÀ-ÿ]+)*$/.test(fn);
+    return fn != null && fn != undefined && fn.length >= 2 && fn.length <= 15 && /^[a-zA-ZÀ-ÿ]+([ '-][a-zA-ZÀ-ÿ]+)*$/.test(fn);
   }
 
   const checkLastName = (ln) => {
-    return (ln != null || undefined) && ln.length >= 2 && ln.length <= 15 && /^[a-zA-ZÀ-ÿ]+$/.test(ln);
+    return ln != null && ln != undefined && ln.length >= 2 && ln.length <= 15 && /^[a-zA-ZÀ-ÿ]+$/.test(ln);
   }
 
   const checkEmail = (em) => {
-    return (em != null || undefined) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+    return em != null && em != undefined && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
   }
 
   const checkPassword = (pw) => {
-    return (pw != null || undefined) && pw.length > 8 && /[a-z]+/.test(pw) && /[A-Z]+/.test(pw) && /[0-9]+/.test(pw) 
+    return pw != null && pw != undefined && pw.length > 8 && /[a-z]+/.test(pw) && /[A-Z]+/.test(pw) && /[0-9]+/.test(pw) 
   }
 
   const checkConfirm = (pw, cpw) => {
-    return (cpw != null || undefined) && pw === cpw;
+    return cpw != null && cpw != undefined && pw === cpw;
   }
 
   ///////////////////////////////////
