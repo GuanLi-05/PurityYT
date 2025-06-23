@@ -13,6 +13,7 @@ export default function page() {
       })
       console.log(res.data.message);
     } catch (error) {
+      console.log(error);
       alert(error.response.data.error);
     }
   }

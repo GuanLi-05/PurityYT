@@ -9,3 +9,14 @@ services:
     environment:
       - NODE_ENV=development
     command: sh -c "npm install && npm run dev" # debugging an issue with docker command
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./backend/.env
