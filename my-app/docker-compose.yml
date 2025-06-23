@@ -3,11 +3,9 @@ services:
     build: ./frontend
     volumes:
       - ./frontend:/app
-      - node_modules:/app/node_modules
+      - /app/node_modules
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-
-volumes:
-  node_modules:
+    command: sh -c "npm install && npm run dev" # debugging an issue with docker command

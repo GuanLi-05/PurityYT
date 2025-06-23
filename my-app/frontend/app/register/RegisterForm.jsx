@@ -3,6 +3,7 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useRouter } from 'next/navigation';
 import {
   IconBrandGithub,
   IconBrandGoogle,
@@ -10,6 +11,7 @@ import {
 } from "@tabler/icons-react";
 
 export default function RegisterForm({setAlertShow, setAlertMessage}) {
+  const router = useRouter();
   const firstName = React.useRef();
   const lastName = React.useRef();
   const email = React.useRef();
@@ -35,6 +37,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage}) {
       return;
     } 
 
+    // add check: email doesnt already exist
     const em = email.current.value?.trim();
     console.log("Email: " + em); // print debug
     if (!checkEmail(em)) {
@@ -58,6 +61,8 @@ export default function RegisterForm({setAlertShow, setAlertMessage}) {
       setAlertShow(true);
       return;
     } 
+
+    router.push("/register/verification");
   };
 
   ///////////////////////////////////
@@ -117,8 +122,8 @@ export default function RegisterForm({setAlertShow, setAlertMessage}) {
           <Input id="password" placeholder="••••••••" type="password" ref={password}/>
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
-          <Label htmlFor="twitterpassword">Your twitter password</Label>
-          <Input id="twitterpassword" placeholder="••••••••" type="twitterpassword" ref={confirmPassword}/>
+          <Label htmlFor="twitterpassword">Confirm password</Label>
+          <Input id="twitterpassword" placeholder="••••••••" type="password" ref={confirmPassword}/>
         </LabelInputContainer>
 
         <button

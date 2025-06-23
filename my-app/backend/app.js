@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { sendCodeRouter } from './emailVerification.js';
 
 const port = 8000;
 const app = express();
@@ -10,6 +11,8 @@ app.use(express.text());
 app.get('/', (req, res) => {
     res.send('send');
 });
+
+app.use('/', sendCodeRouter);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
