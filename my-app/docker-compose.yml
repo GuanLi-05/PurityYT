@@ -20,3 +20,4 @@ services:
       - NODE_ENV=development
     env_file:
       - ./backend/.env
+    command: sh -c "npm install && node app.js"

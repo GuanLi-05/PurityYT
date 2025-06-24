@@ -9,7 +9,7 @@ export default function page() {
     alert("clicked")
     try {
       const res = await axios.post(`http://localhost:8000/email/verify/send`, {
-        "email": "email",
+        "email": "pinega5302@kimdyn.com",
       })
       console.log(res.data.message);
     } catch (error) {
@@ -24,3 +24,52 @@ export default function page() {
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
