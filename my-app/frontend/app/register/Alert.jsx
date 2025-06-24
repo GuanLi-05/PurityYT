@@ -6,12 +6,12 @@ import {
   AlertTitle,
 } from "@/components/ui/alert"
 
-export function RegisterError({message}) {
+export function AlertError({header, message}) {
   return (
     <div className="grid w-full max-w-xl items-start gap-4">
       <Alert variant="destructive">
         <AlertCircleIcon />
-        <AlertTitle>Invalid Registration Details</AlertTitle>
+        <AlertTitle>{header}</AlertTitle>
         <AlertDescription>
           <p>{message}</p>
         </AlertDescription>

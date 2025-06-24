@@ -34,7 +34,7 @@ export default function VerificationPage({storeEmail}) {
       })
       setShowAlert("success");
       alertMessage.current = res.data.message;
-      console.log(res.data.message); // issue here -> undefined
+      console.log(res.data.message); 
     } catch (error) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
