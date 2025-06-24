@@ -24,8 +24,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
     const fn = firstName.current.value?.trim();
     console.log("First name: " + fn); // print debug
     if (!checkFirstName(fn)) {
-      setAlertShow(false);
-      setAlertMessage("First names must be 2 to 15 characters long and may only contain letters, optionally separated by a single hyphen (-), apostrophe ('), or space.");
+      setAlertMessage("First names must be 2 to 15 characters long and may only contain letters.");
       setAlertShow(true);
       return;
     } 
@@ -33,8 +32,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
     const ln = lastName.current.value?.trim();
     console.log("Last name: " + ln); // print debug
     if (!checkLastName(ln)) {
-      setAlertShow(false);
-      setAlertMessage("Last names must be 2 to 15 characters long and may only contain letters.");
+      setAlertMessage("Last names must be 2 to 15 characters long and may only contain letters, optionally separated by a single hyphen (-), apostrophe ('), or space.");
       setAlertShow(true);
       return;
     } 
@@ -43,7 +41,6 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
     const em = email.current.value?.trim();
     console.log("Email: " + em); // print debug
     if (!checkEmail(em)) {
-      setAlertShow(false);
       setAlertMessage("Invalid email address");
       setAlertShow(true);
       return;
@@ -53,7 +50,6 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
     const pw = password.current.value?.trim();
     console.log("Password: " + pw); // print debug
     if (!checkPassword(pw)) {
-      setAlertShow(false);
       setAlertMessage("Password must be longer than 8 characters. Passwords must contain a lowercase letter, an uppercase letter and a number.");
       setAlertShow(true);
       return;
@@ -62,7 +58,6 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
     const cpw = confirmPassword.current.value?.trim();
     console.log("Confirm: " + cpw); // print debug
     if (!checkConfirm(pw, cpw)) {
-      setAlertShow(false);
       setAlertMessage("Passwords do not match");
       setAlertShow(true);
       return;
@@ -76,11 +71,11 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
   ///////////////////////////////////
 
   const checkFirstName = (fn) => {
-    return fn != null && fn != undefined && fn.length >= 2 && fn.length <= 15 && /^[a-zA-ZÀ-ÿ]+([ '-][a-zA-ZÀ-ÿ]+)*$/.test(fn);
+    return fn != null && fn != undefined && fn.length >= 2 && fn.length <= 15 && /^[a-zA-ZÀ-ÿ]+$/.test(fn);
   }
 
   const checkLastName = (ln) => {
-    return ln != null && ln != undefined && ln.length >= 2 && ln.length <= 15 && /^[a-zA-ZÀ-ÿ]+$/.test(ln);
+    return ln != null && ln != undefined && ln.length >= 2 && ln.length <= 15 && /^[a-zA-ZÀ-ÿ]+([ '-][a-zA-ZÀ-ÿ]+)*$/.test(ln);
   }
 
   const checkEmail = (em) => {
@@ -111,16 +106,16 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
           className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="John" type="text" ref={firstName}/>
+            <Input id="firstname" placeholder="Riley" type="text" ref={firstName}/>
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Doe" type="text" ref={lastName}/>
+            <Input id="lastname" placeholder="O'Conner" type="text" ref={lastName}/>
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="johndoe77@gmail.com" type="email" ref={email} />
+          <Input id="email" placeholder="riley77@gmail.com" type="email" ref={email} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
