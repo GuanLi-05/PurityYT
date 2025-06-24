@@ -10,8 +10,9 @@ import {
   IconBrandOnlyfans,
 } from "@tabler/icons-react";
 
-export default function RegisterForm({setAlertShow, setAlertMessage}) {
+export default function RegisterForm({setAlertShow, setAlertMessage, setVerifyShow, storeEmail}) {
   const router = useRouter();
+  //router.push("/")
   const firstName = React.useRef();
   const lastName = React.useRef();
   const email = React.useRef();
@@ -44,7 +45,8 @@ export default function RegisterForm({setAlertShow, setAlertMessage}) {
       setAlertMessage = "Invalid email.";
       setAlertShow(true);
       return;
-    } 
+    }
+    storeEmail.current = em;
     
     const pw = password.current.value?.trim();
     console.log("Password: " + pw); // print debug
@@ -62,7 +64,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage}) {
       return;
     } 
 
-    router.push("/register/verification");
+    setVerifyShow(true);
   };
 
   ///////////////////////////////////

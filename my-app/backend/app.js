@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { sendCodeRouter } from './emailVerification.js';
+import { sendCodeRouter, verifyCodeRouter } from './emailVerification.js';
 
 const port = 8000;
 const app = express();
@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', sendCodeRouter);
+app.use('/', verifyCodeRouter);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

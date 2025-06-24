@@ -8,6 +8,7 @@ dotenv.config();
 ///////////////////////////////////
 // Redis Setup
 ///////////////////////////////////
+
 const redis = Redis.createClient({
   url: process.env.REDIS_URL
 });
@@ -19,6 +20,7 @@ redis.on("error", (err) => console.error("Redis error:", err));
 ///////////////////////////////////
 // Nodemailer Setup
 ///////////////////////////////////
+
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -32,14 +34,20 @@ const transporter = nodemailer.createTransport({
 ///////////////////////////////////
 // Route exporting for app.js
 ///////////////////////////////////
+
 export const sendCodeRouter = express.Router();
+export const verifyCodeRouter = express.Router();
 
 ///////////////////////////////////
 // Routes
 ///////////////////////////////////
+
+/* 
+ * Sends a verification email containing OTP code
+ */
 sendCodeRouter.post("/email/verify/send", async (req, res) => {
   const { email } = req.body;
-  if (!email) return res.status(400).json({ error: "Email is invalid" });
+  if (!email) return res.status(400).json({ error: "Email failed to parse" });
   const code = Math.floor(100000 + Math.random() * 900000).toString()
 
   try {
@@ -51,32 +59,48 @@ sendCodeRouter.post("/email/verify/send", async (req, res) => {
       subject: "Your Verification Code",
       text: `Your verification code is ${code}. This code will expire in 10 minutes.`,
     });
-    res.json({ message: `email sent successfully to ${email}` });
+    return res.status(200).json({ check: true, message: `email sent successfully to ${email}` });
   } catch (e) {
-    res.status(500).json({ error: "Failed to send email: " + e });
+    console.log(e);
+    return res.status(500).json({ error: "Failed to send email"});
   }
 })
 
-
-
-//  const storedCode = await redis.get(email);
-
-
-
-
-
-
-
-
-/* app.post("/verify-code", (req, res) => {
+/* 
+ * Confirms whether user OTP code matches the stored OTP code 
+ * Max 3 failed attempts before a 3 min timeout
+ */
+verifyCodeRouter.post("/email/verify/confirm", async (req, res) => {
   const { email, code } = req.body;
-  const record = verificationCodes[email];
+  if (!email || !code) return res.status(400).json({ error: "Email or OTP failed to parse"});
+  
+  const MAX_ATTEMPTS = 3;
+  const TIMEOUT_SECONDS = 180;
 
-  if (!record) return res.status(400).json({ error: "No code found" });
-  if (Date.now() > record.expiresAt) return res.status(400).json({ error: "Code expired" });
-  if (code !== record.code) return res.status(400).json({ error: "Incorrect code" });
+  try {
+    const failCount = await redis.get(`fail:${email}`);
+    if (failCount && parseInt(failCount) >= MAX_ATTEMPTS) {
+      return res.status(429).json({ check: false, issue: "Too many failed attempts. Please try again later." });
+    }
 
-  delete verificationCodes[email]; // optional: prevent reuse
-  res.json({ success: true, message: "Email verified!" });
-}); */
+    const storedCode = await redis.get(email);
+    if (!storedCode) throw new Error("OTP expired or not found");
+    if (storedCode === code) {
+      await redis.del(email);
+      await redis.del(`fail:${email}`);
+      return res.status(200).json({ check: true });
+    } else {
+      const n = await redis.incr(`fail:${email}`);
+      if (n === MAX_ATTEMPTS) {
+        await redis.expire(`fail:${email}`, TIMEOUT_SECONDS);
+      }
+      return res.status(400).json({ check: false, issue:  "Incorrect Password"});
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ error: "Failed to verify OTP" });
+  }
+})
+  
+
 
