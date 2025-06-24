@@ -2,7 +2,7 @@
 
 import React from 'react'
 import RegisterForm from './RegisterForm'
-import UseAlert from './Alert'
+import { RegisterError } from './Alert'
 import VerificationPage from './VerificationPage'
 
 export default function Register() {
@@ -14,7 +14,7 @@ export default function Register() {
   return (
     !verifyShow ? (
       <div>
-        {alertShow && <UseAlert message={alertMessage}/>}
+        {alertShow && <RegisterError message={alertMessage}/>}
         <RegisterForm 
           setAlertShow={setAlertShow} 
           setAlertMessage={setAlertMessage} 

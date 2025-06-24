@@ -47,7 +47,7 @@ export const verifyCodeRouter = express.Router();
  */
 sendCodeRouter.post("/email/verify/send", async (req, res) => {
   const { email } = req.body;
-  if (!email) return res.status(400).json({ error: "Email failed to parse" });
+  if (!email) return res.status(400).json({ error: "Email failed to parse." });
   const code = Math.floor(100000 + Math.random() * 900000).toString()
 
   try {
@@ -59,10 +59,10 @@ sendCodeRouter.post("/email/verify/send", async (req, res) => {
       subject: "Your Verification Code",
       text: `Your verification code is ${code}. This code will expire in 10 minutes.`,
     });
-    return res.status(200).json({ check: true, message: `email sent successfully to ${email}` });
+    return res.status(200).json({ message: `Email sent successfully to ${email}.` });
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ error: "Failed to send email"});
+    return res.status(500).json({ error: "Failed to send email."});
   }
 })
 
@@ -80,7 +80,7 @@ verifyCodeRouter.post("/email/verify/confirm", async (req, res) => {
   try {
     const failCount = await redis.get(`fail:${email}`);
     if (failCount && parseInt(failCount) >= MAX_ATTEMPTS) {
-      return res.status(429).json({ check: false, issue: "Too many failed attempts. Please try again later." });
+      return res.status(429).json({ error: "Too many failed attempts. Please try again later." });
     }
 
     const storedCode = await redis.get(email);
@@ -88,17 +88,17 @@ verifyCodeRouter.post("/email/verify/confirm", async (req, res) => {
     if (storedCode === code) {
       await redis.del(email);
       await redis.del(`fail:${email}`);
-      return res.status(200).json({ check: true });
+      return res.status(200).json({ message: "Completing registration." });
     } else {
       const n = await redis.incr(`fail:${email}`);
       if (n === MAX_ATTEMPTS) {
         await redis.expire(`fail:${email}`, TIMEOUT_SECONDS);
       }
-      return res.status(400).json({ check: false, issue:  "Incorrect Password"});
+      return res.status(400).json({ error: "Incorrect password."});
     }
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ error: "Failed to verify OTP" });
+    return res.status(500).json({ error: "Failed to verify password." });
   }
 })
   

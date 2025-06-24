@@ -2,8 +2,12 @@
 
 import axios from 'axios'
 import OTPComponent from './OTPComponent'
+import React, { useRef } from 'react'
+import { SendEmailError, SendEmailSuccess } from './Alert';
 
 export default function VerificationPage({storeEmail}) {
+  const [showAlert, setShowAlert] = React.useState(null);
+  const alertMessage = useRef("");
 
   const sendCode = async () => {
     alert("clicked")
@@ -11,9 +15,12 @@ export default function VerificationPage({storeEmail}) {
       const res = await axios.post('http://localhost:8000/email/verify/send', {
         "email": storeEmail.current,
       })
-      console.log(res.data.message);
+      setShowAlert("success");
+      alertMessage.current = res.data.message;
+
     } catch (error) {
-      console.log(error.response.data);
+      setShowAlert("error");
+      alertMessage.current = error.response?.data?.error || "";
     }
   }
 
@@ -23,14 +30,21 @@ export default function VerificationPage({storeEmail}) {
         email: storeEmail.current,
         code: code
       })
-      console.log(res.data.check);
+      setShowAlert("success");
+      alertMessage.current = res.data.message;
     } catch (error) {
-      console.log(error.response.data);
+      setShowAlert("error");
+      alertMessage.current = error.response?.data?.error || "";
     }
   }
 
   return (
     <div>
+      {showAlert === "error" ? 
+        (<SendEmailError message={alertMessage.current}/>) : showAlert === "success" ? 
+        (<SendEmailSuccess message={alertMessage.current}/>) : 
+        (<></>)
+      }
       <OTPComponent confirmCode={confirmCode}/>
       <button onClick={sendCode}>Test</button>
     </div>

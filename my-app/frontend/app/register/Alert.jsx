@@ -6,7 +6,7 @@ import {
   AlertTitle,
 } from "@/components/ui/alert"
 
-export default function RegisterError({message}) {
+export function RegisterError({message}) {
   return (
     <div className="grid w-full max-w-xl items-start gap-4">
       <Alert variant="destructive">
@@ -19,3 +19,32 @@ export default function RegisterError({message}) {
     </div>
   )
 }
+
+export function SendEmailError({message}) {
+  return (
+    <div className="grid w-full max-w-xl items-start gap-4">
+      <Alert variant="destructive">
+        <AlertCircleIcon />
+        <AlertTitle>Something Went Wrong</AlertTitle>
+        <AlertDescription>
+          <p>{message} Please try again later.</p>
+        </AlertDescription>
+      </Alert>
+    </div>
+  )
+}
+
+export function SendEmailSuccess({message}) {
+  return (
+    <div className="grid w-full max-w-xl items-start gap-4">
+      <Alert>
+        <CheckCircle2Icon />
+        <AlertTitle>Success!</AlertTitle>
+        <AlertDescription>
+          <p>{message}</p>
+        </AlertDescription>
+      </Alert>
+    </div>
+  )
+}
+
