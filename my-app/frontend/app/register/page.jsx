@@ -12,6 +12,7 @@ export default function Register() {
   const [verifyShow, setVerifyShow] = React.useState(false);
   const storeEmail = React.useRef();
 
+  /* Dismiss alert on keydown */
   React.useEffect(() => {
     const handleKeydown = () => {
       setAlertShow(false);

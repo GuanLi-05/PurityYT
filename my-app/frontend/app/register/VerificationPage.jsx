@@ -3,13 +3,15 @@
 import axios from 'axios'
 import OTPComponent from './OTPComponent'
 import React, { useRef } from 'react'
-import { SendEmailError, SendEmailSuccess } from './Alert';
+import { AlertError, AlertSuccess } from './Alert';
 import Load from './Load';
+import { Transition } from '@headlessui/react';
 
 export default function VerificationPage({storeEmail}) {
   const [showAlert, setShowAlert] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const alertMessage = useRef("");
+  const alertHeader = useRef("");
 
   /* Send email verification request to backend */
   const sendCode = async () => {
@@ -32,6 +34,12 @@ export default function VerificationPage({storeEmail}) {
 
   /* Confirm verification request to backend */
   const confirmCode = async (code) => {
+    if (code === null || code === undefined || code.length !== 6 || !/^[0-9]{6}$/.test(code)) {
+      alertHeader.current = "Invalid Passkey"
+      alertMessage.current = "Please fill in the required 6 digits"
+      setShowAlert("error");
+      return;
+    }
     try {
       const res = await axios.post('http://localhost:8000/email/verify/confirm', {
         email: storeEmail.current,
@@ -43,6 +51,7 @@ export default function VerificationPage({storeEmail}) {
     } catch (error) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
+      alertHeader.current = error.response?.data?.header || "Something Went Wrong";
       console.log(error.response?.data?.error);
     }
   }
@@ -53,6 +62,17 @@ export default function VerificationPage({storeEmail}) {
       await sendCode();
     })();
   }, []);
+
+  /* Dismiss alert on keydown */
+  React.useEffect(() => {
+      const handleKeydown = () => {
+        setShowAlert(false);
+      }
+      window.addEventListener("keydown", handleKeydown);
+      return () => {
+        window.removeEventListener("keydown", handleKeydown)
+      }
+    }, [])
 
   return (
     <div>
@@ -65,21 +85,45 @@ export default function VerificationPage({storeEmail}) {
               Verify Email
             </h2>
             <p className="mt-2 mb-10 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-              Enter the one-time password sent to your email
+              Enter the one-time passkey sent to your email
             </p>
           </div>
           <OTPComponent confirmCode={confirmCode} />
         </div>
         
       )}
-      {showAlert === "error" ? 
-        (<SendEmailError message={alertMessage.current}/>) : showAlert === "success" ? 
-        (<SendEmailSuccess message={alertMessage.current}/>) : 
-        (<></>)
-      }
+
+      <Transition
+        show={showAlert === "error"}
+        enter="transition ease-out duration-300"
+        enterFrom="opacity-0 translate-y-4"
+        enterTo="opacity-100 translate-y-0"
+        leave="transition ease-in duration-200"
+        leaveFrom="opacity-100 translate-y-0"
+        leaveTo="opacity-0 translate-y-4"
+        className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
+      >
+        <div>
+          <AlertError header={alertHeader.current} message={alertMessage.current}/>
+        </div>
+      </Transition>
+       <Transition
+        show={showAlert === "success"}
+        enter="transition ease-out duration-300"
+        enterFrom="opacity-0 translate-y-4"
+        enterTo="opacity-100 translate-y-0"
+        leave="transition ease-in duration-200"
+        leaveFrom="opacity-100 translate-y-0"
+        leaveTo="opacity-0 translate-y-4"
+        className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
+      >
+        <div>
+          <AlertSuccess header="Success!" message={alertMessage.current}/>
+        </div>
+      </Transition>
     </div>
     
   )
-}
+} 
 
 

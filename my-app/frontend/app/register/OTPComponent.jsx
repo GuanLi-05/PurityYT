@@ -14,11 +14,7 @@ export default function OTPComponent({confirmCode}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const c = ref.current.value;
-    if (c === null || c === undefined || c.length !== 6 || !/^[0-9]{6}$/.test(c)) {
-      return;
-    }
-    confirmCode(c);
+    confirmCode(ref.current.value);
   }
 
   return (

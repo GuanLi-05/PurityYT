@@ -20,26 +20,12 @@ export function AlertError({header, message}) {
   )
 }
 
-export function SendEmailError({message}) {
-  return (
-    <div className="grid w-full max-w-xl items-start gap-4">
-      <Alert variant="destructive">
-        <AlertCircleIcon />
-        <AlertTitle>Something Went Wrong</AlertTitle>
-        <AlertDescription>
-          <p>{message} Please try again later.</p>
-        </AlertDescription>
-      </Alert>
-    </div>
-  )
-}
-
-export function SendEmailSuccess({message}) {
+export function AlertSuccess({header, message}) {
   return (
     <div className="grid w-full max-w-xl items-start gap-4">
       <Alert>
         <CheckCircle2Icon />
-        <AlertTitle>Success!</AlertTitle>
+        <AlertTitle>{header}</AlertTitle>
         <AlertDescription>
           <p>{message}</p>
         </AlertDescription>
