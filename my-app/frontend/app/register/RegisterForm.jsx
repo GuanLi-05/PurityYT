@@ -103,7 +103,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Welcome to PurityYT
       </h2>
-      <p className="mt-1.5 mb-0.5 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
+      <p className="mt-1.5 mb-5 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
        Create an account to get started.
       </p>
       <form className="mt-2" onSubmit={handleSubmit} noValidate>
@@ -111,24 +111,24 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
           className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Tyler" type="text" ref={firstName}/>
+            <Input id="firstname" placeholder="John" type="text" ref={firstName}/>
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Durden" type="text" ref={lastName}/>
+            <Input id="lastname" placeholder="Doe" type="text" ref={lastName}/>
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" ref={email} />
+          <Input id="email" placeholder="johndoe77@gmail.com" type="email" ref={email} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" ref={password}/>
+          <Input id="password" placeholder="••••••••••" type="password" ref={password}/>
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="twitterpassword">Confirm password</Label>
-          <Input id="twitterpassword" placeholder="••••••••" type="password" ref={confirmPassword}/>
+          <Input id="twitterpassword" placeholder="••••••••••" type="password" ref={confirmPassword}/>
         </LabelInputContainer>
 
         <button

@@ -12,6 +12,16 @@ export default function Register() {
   const [verifyShow, setVerifyShow] = React.useState(false);
   const storeEmail = React.useRef();
 
+  React.useEffect(() => {
+    const handleKeydown = () => {
+      setAlertShow(false);
+    }
+    window.addEventListener("keydown", handleKeydown);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown)
+    }
+  }, [])
+
   return (
   !verifyShow ? (
     <div className="flex justify-center items-center h-[92vh]">
@@ -38,7 +48,7 @@ export default function Register() {
       />
     </div>
   ) : (
-    <div>
+    <div className="flex justify-center items-center h-screen">
       <VerificationPage storeEmail={storeEmail} />
     </div>
   )
