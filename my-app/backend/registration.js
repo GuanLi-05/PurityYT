@@ -23,7 +23,7 @@ process.on('SIGTERM', async () => {
 // Encryption
 ///////////////////////////////////
 
-async function encryptPassword() {
+async function encryptPassword(password) {
   const saltRounds = 10;
   try {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -33,9 +33,9 @@ async function encryptPassword() {
   }
 }
 
-async function verifyPassword() {
+async function verifyPassword(password) {
   try {
-    const isValid = await bcrypt.compare(submittedPassword, user.password)
+    const isValid = await bcrypt.compare(password, user.password)
   } catch (error) {
     throw new Error(error);
   }
@@ -66,7 +66,8 @@ handleRegisterRouter.post('/register', async (req, res) => {
     });
     res.status(201).json({ message: "User registered", user: newUser });
   } catch (error) {
-    console.error(error);
+    console.error(e);
+    console.log(e);
     return res.status(500).json({ error: "Please try again later." });
   }
 })

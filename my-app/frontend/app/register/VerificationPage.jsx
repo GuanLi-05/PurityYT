@@ -61,8 +61,8 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
     }
   }
 
+  /* Register user into DB */
   const registerUser = async () => {
-    alert("called");
     try {
       const res = axios.post(`${URL}/register`, {
         fname: storeFname,
@@ -77,10 +77,9 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
 
   /* Send email verification on mount */
   React.useEffect(() => {
-    alert("debug");
     if (!sentRef.current) {
-      alert("internal debug");
-      sendCode();
+      //sendCode();  TEMP email verif BYPASS for testing
+      registerUser(); // Remove this after
       sentRef.current = true;
     }
   }, []);

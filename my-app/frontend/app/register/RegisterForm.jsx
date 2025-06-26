@@ -22,7 +22,6 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
     e.preventDefault();
 
     const fn = firstName.current.value?.trim();
-    console.log("First name: " + fn); // print debug
     if (!checkFirstName(fn)) {
       setAlertMessage("First names must be 2 to 15 characters long and may only contain letters.");
       setAlertShow(true);
@@ -31,7 +30,6 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
     storeFname.current = fn;
 
     const ln = lastName.current.value?.trim();
-    console.log("Last name: " + ln); // print debug
     if (!checkLastName(ln)) {
       setAlertMessage("Last names must be 2 to 15 characters long and may only contain letters, optionally separated by a single hyphen (-), apostrophe ('), or space.");
       setAlertShow(true);
@@ -41,7 +39,6 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
 
     // add check: email doesnt already exist
     const em = email.current.value?.trim();
-    console.log("Email: " + em); // print debug
     if (!checkEmail(em)) {
       setAlertMessage("Invalid email address");
       setAlertShow(true);
@@ -50,7 +47,6 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
     storeEmail.current = em;
 
     const pw = password.current.value?.trim();
-    console.log("Password: " + pw); // print debug
     if (!checkPassword(pw)) {
       setAlertMessage("Password must be longer than 8 characters. Passwords must contain a lowercase letter, an uppercase letter and a number.");
       setAlertShow(true);
