@@ -16,8 +16,7 @@ export default function Load() {
       `}</style>
 
       <div
-        className="fixed inset-0 flex items-center justify-center bg-transparent z-50"
-      >
+        className="fixed inset-0 flex items-center justify-center z-50 bg-[#fafafa] dark:bg-[#0a0a0a]">
         <div className="flex items-center justify-center space-x-2 h-8">
           <span
             className="w-2 h-2 rounded-full bg-gray-600 dark:bg-gray-300 big-bounce-pause"
