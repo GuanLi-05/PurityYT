@@ -63,7 +63,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
   /* Register user into DB */
   const registerUser = async () => {
     try {
-      await axios.post(`${URL}/register`, {
+      const res = await axios.post(`${URL}/register`, {
         fname: storeFname.current,
         lname: storeLname.current,
         email: storeEmail.current,
