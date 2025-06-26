@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '../../../prisma.js'
 import bcrypt from "bcrypt";
+import GoogleProvider from "next-auth/providers/google";
 
 /* 
  * providers:
@@ -9,6 +10,8 @@ import bcrypt from "bcrypt";
  *  - takes in credentials obj containing email, password
  *  - authorize() by retrieving user and comparing passwords
  *  - returns object containing user infomation
+ * GoogleProvider
+ *  - authenticate using google client
  * 
  * session:
  * handles authenitcation using jwt tokens
@@ -36,6 +39,10 @@ export default NextAuth({
         }
         return { id: user.id, Fname: user.firstName, Lname: user.lastName, email: user.email };
       }
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     })
   ],
   session: {
