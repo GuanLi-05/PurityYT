@@ -3,10 +3,30 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '../../../prisma.js'
 import bcrypt from "bcrypt";
 
+/* 
+ * providers:
+ * custom CredentialsProvider
+ *  - takes in credentials obj containing email, password
+ *  - authorize() by retrieving user and comparing passwords
+ *  - returns object containing user infomation
+ * 
+ * session:
+ * handles authenitcation using jwt tokens
+ * 
+ * callbacks:
+ * jwt
+ *  - called when jwt token created/updated (login requests)
+ *  - stores information returned by authorise() inside token
+ * session
+ *  - called when session object is checked or fetched (useSession(), getSession())
+ *  - copies information in token into session for access
+ * 
+ * pages:
+ *  - redirects to /login when rerouting client for login
+ */
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Credentials",
       async authorize(credentials) {
         const user = await prisma.credentials.findUnique({
           where: { email: credentials.email }

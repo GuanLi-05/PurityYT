@@ -8,23 +8,37 @@ import {
   IconBrandGoogle,
 } from "@tabler/icons-react";
 import Link from 'next/link';
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const URL = 'http://localhost:8000';
 
 export default function LoginForm({ setAlertShow, setAlertMessage }) {
+  const router = useRouter();
   const email = React.useRef();
   const password = React.useRef();
 
+  /* Logs in user as specified in [...nextauth].js 
+   * does not automatically redirect, manually rediredts to "/"
+   */
   const handleLogin = async (email, password) => {
-    try {
-      const res = await axios.post(`${URL}/login`, {
-        email: email,
-        password: password
-      })
-    } catch (error) {
-      console.log(error);
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: email,
+      password: password
+    });
+
+    if (res.error) {
+      if (res.error === "CredentialsSignin") {
+        setAlertMessage("Incorrect email or password.");
+      } else {
+        setAlertMessage(res.error + ": Log in denied.");
+      }
+      setAlertShow(true);
+    } else {
+      router.push("/");
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

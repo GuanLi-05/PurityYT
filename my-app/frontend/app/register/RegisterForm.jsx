@@ -99,7 +99,6 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
       })
       return res.data.unique;
     } catch (error) {
-      console.log(error);
       setAlertMessage(error);
       setAlertShow(true);
       return false;

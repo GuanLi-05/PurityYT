@@ -27,13 +27,11 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
       })
       setShowAlert("success");
       alertMessage.current = res.data.message;
-      console.log(res.data.message);
       setLoading(false);
     } catch (error) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
       alertHeader.current = error.response?.data?.header || "Something Went Wrong";
-      console.log(error.response?.data?.error);
       setLoading(false);
     }
   }
@@ -56,7 +54,6 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
       alertHeader.current = error.response?.data?.header || "Something Went Wrong";
-      console.log(error.response?.data?.error);
     }
   }
 
@@ -71,10 +68,11 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
       })
       setShowAlert("success");
       alertMessage.current = res.data.message;
-      console.log(res.data.message);
       router.push("/");
     } catch (error) {
-      console.log(error.response?.data?.error);
+      setShowAlert("error");
+      alertMessage.current = error.response?.data?.error || "";
+      alertHeader.current = error.response?.data?.header || "Something Went Wrong";
     }
   }
 

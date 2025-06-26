@@ -42,7 +42,7 @@ handleRegisterRouter.post('/register', async (req, res) => {
     res.status(201).json({ message: "Completing registration." });
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ error: "Please try again later." });
+    return res.status(500).json({ error: "Network Error. Please try again later." });
   }
 })
 
