@@ -11,12 +11,13 @@ export const handleRegisterRouter = express.Router();
 // Routes
 ///////////////////////////////////
 
-
-
 const saltRounds = 10;
 const hashedPassword = await bcrypt.hash(password, saltRounds);
 const isValid = await bcrypt.compare(submittedPassword, user.password)
 
+///////////////////////////////////
+// Prisma
+///////////////////////////////////
 
 import { PrismaClient } from '@prisma/client'
 

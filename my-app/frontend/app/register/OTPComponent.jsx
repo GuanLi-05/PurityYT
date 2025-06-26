@@ -9,7 +9,7 @@ import {
   InputOTPSeparator
 } from "@/components/ui/input-otp"
 
-export default function OTPComponent({confirmCode}) {
+export default function OTPComponent({ confirmCode }) {
   const ref = React.useRef();
 
   const handleSubmit = (e) => {

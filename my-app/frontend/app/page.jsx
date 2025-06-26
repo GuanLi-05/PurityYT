@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       <ModeToggle />
       <Button>Click me</Button>
-      <CarouselDemo/>
+      <CarouselDemo />
     </div>
   )
 }

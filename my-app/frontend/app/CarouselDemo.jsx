@@ -6,7 +6,7 @@ export default function GameCarousel() {
   const router = useRouter();
 
   const slideData = [
-     {
+    {
       title: "Mystic Mountains",
       button: "Explore Component",
       src: "https://images.unsplash.com/photo-1494806812796-244fe51b774d?q=80&w=3534&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -38,8 +38,8 @@ export default function GameCarousel() {
 
   return (
     <div className="relative overflow-hidden w-full h-full py-20">
-      <Carousel 
-        slides={slideData} 
+      <Carousel
+        slides={slideData}
         onButtonClick={(slide) => buttonClick(slide)}
       />
     </div>

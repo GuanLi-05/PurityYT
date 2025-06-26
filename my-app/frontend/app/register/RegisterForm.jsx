@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import Link from 'next/link';
 
-export default function RegisterForm({setAlertShow, setAlertMessage, setVerifyShow, storeEmail}) {
+export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyShow, storeEmail }) {
   const router = useRouter();
   //router.push("/")
   const firstName = React.useRef();
@@ -27,7 +27,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
       setAlertMessage("First names must be 2 to 15 characters long and may only contain letters.");
       setAlertShow(true);
       return;
-    } 
+    }
 
     const ln = lastName.current.value?.trim();
     console.log("Last name: " + ln); // print debug
@@ -35,7 +35,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
       setAlertMessage("Last names must be 2 to 15 characters long and may only contain letters, optionally separated by a single hyphen (-), apostrophe ('), or space.");
       setAlertShow(true);
       return;
-    } 
+    }
 
     // add check: email doesnt already exist
     const em = email.current.value?.trim();
@@ -46,14 +46,14 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
       return;
     }
     storeEmail.current = em;
-    
+
     const pw = password.current.value?.trim();
     console.log("Password: " + pw); // print debug
     if (!checkPassword(pw)) {
       setAlertMessage("Password must be longer than 8 characters. Passwords must contain a lowercase letter, an uppercase letter and a number.");
       setAlertShow(true);
       return;
-    } 
+    }
 
     const cpw = confirmPassword.current.value?.trim();
     console.log("Confirm: " + cpw); // print debug
@@ -61,7 +61,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
       setAlertMessage("Passwords do not match");
       setAlertShow(true);
       return;
-    } 
+    }
 
     setVerifyShow(true);
   };
@@ -83,7 +83,7 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
   }
 
   const checkPassword = (pw) => {
-    return pw != null && pw != undefined && pw.length > 8 && /[a-z]+/.test(pw) && /[A-Z]+/.test(pw) && /[0-9]+/.test(pw) 
+    return pw != null && pw != undefined && pw.length > 8 && /[a-z]+/.test(pw) && /[A-Z]+/.test(pw) && /[0-9]+/.test(pw)
   }
 
   const checkConfirm = (pw, cpw) => {
@@ -99,18 +99,18 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
         Welcome to PurityYT
       </h2>
       <p className="mt-1.5 mb-5 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-       Create an account to get started.
+        Create an account to get started.
       </p>
       <form className="mt-2" onSubmit={handleSubmit} noValidate>
         <div
           className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Riley" type="text" ref={firstName}/>
+            <Input id="firstname" placeholder="Riley" type="text" ref={firstName} />
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="O'Conner" type="text" ref={lastName}/>
+            <Input id="lastname" placeholder="O'Conner" type="text" ref={lastName} />
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
@@ -119,11 +119,11 @@ export default function RegisterForm({setAlertShow, setAlertMessage, setVerifySh
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••••" type="password" ref={password}/>
+          <Input id="password" placeholder="••••••••••" type="password" ref={password} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="twitterpassword">Confirm password</Label>
-          <Input id="twitterpassword" placeholder="••••••••••" type="password" ref={confirmPassword}/>
+          <Input id="twitterpassword" placeholder="••••••••••" type="password" ref={confirmPassword} />
         </LabelInputContainer>
 
         <button

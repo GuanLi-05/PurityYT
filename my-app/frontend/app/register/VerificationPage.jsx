@@ -7,7 +7,7 @@ import { AlertError, AlertSuccess } from './Alert';
 import Load from './Load';
 import { Transition } from '@headlessui/react';
 
-export default function VerificationPage({storeEmail}) {
+export default function VerificationPage({ storeEmail }) {
   const [showAlert, setShowAlert] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const alertMessage = useRef("");
@@ -47,7 +47,7 @@ export default function VerificationPage({storeEmail}) {
       })
       setShowAlert("success");
       alertMessage.current = res.data.message;
-      console.log(res.data.message); 
+      console.log(res.data.message);
     } catch (error) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
@@ -65,19 +65,19 @@ export default function VerificationPage({storeEmail}) {
 
   /* Dismiss alert on keydown */
   React.useEffect(() => {
-      const handleKeydown = () => {
-        setShowAlert(false);
-      }
-      window.addEventListener("keydown", handleKeydown);
-      return () => {
-        window.removeEventListener("keydown", handleKeydown)
-      }
-    }, [])
+    const handleKeydown = () => {
+      setShowAlert(false);
+    }
+    window.addEventListener("keydown", handleKeydown);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown)
+    }
+  }, [])
 
   return (
     <div>
       {loading ? (
-        <Load/>
+        <Load />
       ) : (
         <div className="flex flex-col justify-center items-center shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
           <div>
@@ -90,7 +90,7 @@ export default function VerificationPage({storeEmail}) {
           </div>
           <OTPComponent confirmCode={confirmCode} />
         </div>
-        
+
       )}
 
       <Transition
@@ -104,10 +104,10 @@ export default function VerificationPage({storeEmail}) {
         className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
       >
         <div>
-          <AlertError header={alertHeader.current} message={alertMessage.current}/>
+          <AlertError header={alertHeader.current} message={alertMessage.current} />
         </div>
       </Transition>
-       <Transition
+      <Transition
         show={showAlert === "success"}
         enter="transition ease-out duration-300"
         enterFrom="opacity-0 translate-y-4"
@@ -118,12 +118,12 @@ export default function VerificationPage({storeEmail}) {
         className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
       >
         <div>
-          <AlertSuccess header="Success!" message={alertMessage.current}/>
+          <AlertSuccess header="Success!" message={alertMessage.current} />
         </div>
       </Transition>
     </div>
-    
+
   )
-} 
+}
 
 

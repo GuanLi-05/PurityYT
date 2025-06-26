@@ -6,7 +6,7 @@ import {
   AlertTitle,
 } from "@/components/ui/alert"
 
-export function AlertError({header, message}) {
+export function AlertError({ header, message }) {
   return (
     <div className="grid w-full max-w-xl items-start gap-4">
       <Alert variant="destructive">
@@ -20,7 +20,7 @@ export function AlertError({header, message}) {
   )
 }
 
-export function AlertSuccess({header, message}) {
+export function AlertSuccess({ header, message }) {
   return (
     <div className="grid w-full max-w-xl items-start gap-4">
       <Alert>

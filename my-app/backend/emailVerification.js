@@ -62,7 +62,7 @@ sendCodeRouter.post("/email/verify/send", async (req, res) => {
     return res.status(200).json({ message: `Email sent successfully to ${email}.` });
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ error: "Email failed to send. Please try again later."});
+    return res.status(500).json({ error: "Email failed to send. Please try again later." });
   }
 })
 
@@ -73,7 +73,7 @@ sendCodeRouter.post("/email/verify/send", async (req, res) => {
 verifyCodeRouter.post("/email/verify/confirm", async (req, res) => {
   const { email, code } = req.body;
   if (!email || !code) return res.status(400).json({ error: "Email or passkey failed to parse. Please try again later." });
-  
+
   const MAX_ATTEMPTS = 3;
   const TIMEOUT_SECONDS = 180;
 
@@ -94,13 +94,13 @@ verifyCodeRouter.post("/email/verify/confirm", async (req, res) => {
       if (n === MAX_ATTEMPTS) {
         await redis.expire(`fail:${email}`, TIMEOUT_SECONDS);
       }
-      return res.status(400).json({ header: "Incorrect Passkey", error: "Try again."});
+      return res.status(400).json({ header: "Incorrect Passkey", error: "Try again." });
     }
   } catch (e) {
     console.log(e);
     return res.status(500).json({ error: "Failed to verify passkey. Please try again later." });
   }
 })
-  
+
 
 
