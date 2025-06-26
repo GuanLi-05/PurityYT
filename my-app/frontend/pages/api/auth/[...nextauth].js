@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { prisma } from './prisma.js'
-import bcrypt from "bcryptjs";
+import prisma from '../../../prisma.js'
+import bcrypt from "bcrypt";
 
 export default NextAuth({
   providers: [
@@ -37,7 +37,7 @@ export default NextAuth({
       return session;
     }
   },
-  /* pages: {
+  pages: {
     signIn: '/login'
-  } */
+  }
 });
