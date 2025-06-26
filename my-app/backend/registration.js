@@ -1,5 +1,45 @@
 import bcrypt from 'bcrypt'
 import express from 'express'
+import { PrismaClient } from '@prisma/client'
+
+///////////////////////////////////
+// Prisma
+///////////////////////////////////
+
+const prisma = new PrismaClient()
+
+process.on('SIGINT', async () => {
+  await prisma.$disconnect();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  await prisma.$disconnect();
+  process.exit(0);
+});
+
+
+///////////////////////////////////
+// Encryption
+///////////////////////////////////
+
+async function encryptPassword() {
+  const saltRounds = 10;
+  try {
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    return hashedPassword;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+async function verifyPassword() {
+  try {
+    const isValid = await bcrypt.compare(submittedPassword, user.password)
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 
 ///////////////////////////////////
 // Route exporting for app.js
@@ -11,47 +51,23 @@ export const handleRegisterRouter = express.Router();
 // Routes
 ///////////////////////////////////
 
-handleRegisterRouter.post('', (req, res) => {
+handleRegisterRouter.post('', async (req, res) => {
   const { fname, lname, email, password } = req.body;
   console.log(fname + lname + email + password);
+  try {
+    const encPassword = await encryptPassword(password);
+    const newUser = await prisma.credentials.create({
+      data: {
+        firstName: fname,
+        lastName: lname,
+        email: email,
+        password: encPassword,
+      },
+    });
+
+    res.status(201).json({ message: "User registered", user: newUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Please try again later." });
+  }
 })
-
-///////////////////////////////////
-// Encryption
-///////////////////////////////////
-
-const saltRounds = 10;
-const hashedPassword = await bcrypt.hash(password, saltRounds);
-const isValid = await bcrypt.compare(submittedPassword, user.password)
-
-///////////////////////////////////
-// Prisma
-///////////////////////////////////
-
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
-
-async function main() {
-  // Create a user
-  const newUser = await prisma.user.create({
-    data: {
-      email: "alice@example.com",
-      name: "Alice",
-      password: "hashedpassword123",
-    },
-  })
-
-  console.log("Created user:", newUser)
-
-  // Query user by email
-  const user = await prisma.user.findUnique({
-    where: { email: "alice@example.com" },
-  })
-
-  console.log("Found user:", user)
-}
-
-main()
-  .catch(e => console.error(e))
-  .finally(async () => await prisma.$disconnect())

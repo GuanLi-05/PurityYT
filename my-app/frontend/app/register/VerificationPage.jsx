@@ -48,6 +48,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
         email: storeEmail.current,
         code: code
       })
+      registerUser();
       setShowAlert("success");
       alertMessage.current = res.data.message;
       console.log(res.data.message);
