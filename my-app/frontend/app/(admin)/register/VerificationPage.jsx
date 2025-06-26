@@ -3,8 +3,8 @@
 import axios from 'axios'
 import OTPComponent from './OTPComponent'
 import React from 'react'
-import { AlertError, AlertSuccess } from '../Alert';
-import Load from '../Load';
+import { AlertError, AlertSuccess } from '../../Alert';
+import Load from '../../Load';
 import { Transition } from '@headlessui/react';
 import { useRouter } from "next/navigation"
 

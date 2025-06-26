@@ -1,19 +1,13 @@
 "use client"
 
 import React from 'react'
-import RegisterForm from './RegisterForm'
-import { AlertError } from '../Alert'
-import VerificationPage from './VerificationPage'
+import LoginForm from './LoginForm'
+import { AlertError } from '../../Alert'
 import { Transition } from '@headlessui/react';
 
 export default function Register() {
   const [alertShow, setAlertShow] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState(false);
-  const [verifyShow, setVerifyShow] = React.useState(false);
-  const storeFname = React.useRef();
-  const storeLname = React.useRef();
-  const storeEmail = React.useRef();
-  const storePassword = React.useRef();
 
   /* Dismiss alert on keydown */
   React.useEffect(() => {
@@ -27,7 +21,7 @@ export default function Register() {
   }, [])
 
   return (
-    !verifyShow ? (
+    <>
       <div className="flex justify-center items-center h-[92vh]">
         <Transition
           show={alertShow}
@@ -44,25 +38,11 @@ export default function Register() {
           </div>
         </Transition>
 
-        <RegisterForm
+        <LoginForm
           setAlertShow={setAlertShow}
           setAlertMessage={setAlertMessage}
-          setVerifyShow={setVerifyShow}
-          storeEmail={storeEmail}
-          storeFname={storeFname}
-          storeLname={storeLname}
-          storePassword={storePassword}
         />
       </div>
-    ) : (
-      <div className="flex justify-center items-center h-screen">
-        <VerificationPage
-          storeEmail={storeEmail}
-          storeFname={storeFname}
-          storeLname={storeLname}
-          storePassword={storePassword}
-        />
-      </div>
-    )
+    </>
   );
 }
