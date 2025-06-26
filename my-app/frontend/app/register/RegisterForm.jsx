@@ -39,13 +39,13 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
 
     const em = email.current.value?.trim();
     if (!checkEmail(em)) {
-      setAlertMessage("Invalid email address");
+      setAlertMessage("Invalid email address.");
       setAlertShow(true);
       return;
     }
     const isUnique = await checkUniqueEmail(em);
     if (!isUnique) {
-      setAlertMessage("This email is already registered");
+      setAlertMessage("This email is already registered.");
       setAlertShow(true);
       return;
     }
@@ -60,7 +60,7 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
 
     const cpw = confirmPassword.current.value?.trim();
     if (!checkConfirm(pw, cpw)) {
-      setAlertMessage("Passwords do not match");
+      setAlertMessage("Passwords do not match.");
       setAlertShow(true);
       return;
     }
