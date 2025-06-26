@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { sendCodeRouter, verifyCodeRouter, checkUniqueEmail } from './emailVerification.js';
 import { handleRegisterRouter } from './registration.js';
+import { handleLoginRouter } from './login.js';
 
 const port = 8000;
 const app = express();
@@ -12,7 +13,8 @@ app.use('/', sendCodeRouter);
 app.use('/', verifyCodeRouter);
 app.use('/', handleRegisterRouter);
 app.use('/', checkUniqueEmail);
+app.use('/', handleLoginRouter);
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 })

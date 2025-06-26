@@ -8,8 +8,6 @@ import { Transition } from '@headlessui/react';
 export default function Register() {
   const [alertShow, setAlertShow] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState(false);
-  const storeEmail = React.useRef();
-  const storePassword = React.useRef();
 
   /* Dismiss alert on keydown */
   React.useEffect(() => {
@@ -43,8 +41,6 @@ export default function Register() {
         <LoginForm
           setAlertShow={setAlertShow}
           setAlertMessage={setAlertMessage}
-          storeEmail={storeEmail}
-          storePassword={storePassword}
         />
       </div>
     </>

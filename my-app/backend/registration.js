@@ -28,6 +28,7 @@ export const handleRegisterRouter = express.Router();
 
 handleRegisterRouter.post('/register', async (req, res) => {
   const { fname, lname, email, password } = req.body;
+  if (!fname || !lname || !email || !password) return res.status(400).json({ error: "Details failed to parse. Please try again later." });
   try {
     const encPassword = await encryptPassword(password);
     await prisma.credentials.create({
@@ -40,7 +41,6 @@ handleRegisterRouter.post('/register', async (req, res) => {
     });
     res.status(201).json({ message: "Completing registration." });
   } catch (e) {
-    console.error(e);
     console.log(e);
     return res.status(500).json({ error: "Please try again later." });
   }

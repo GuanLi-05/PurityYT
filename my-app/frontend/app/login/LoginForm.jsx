@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import axios from "axios";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -10,12 +11,20 @@ import Link from 'next/link';
 
 const URL = 'http://localhost:8000';
 
-export default function LoginForm({ setAlertShow, setAlertMessage, storeEmail, storePassword }) {
-  const firstName = React.useRef();
-  const lastName = React.useRef();
+export default function LoginForm({ setAlertShow, setAlertMessage }) {
   const email = React.useRef();
   const password = React.useRef();
-  const confirmPassword = React.useRef();
+
+  const handleLogin = async (email, password) => {
+    try {
+      const res = await axios.post(`${URL}/login`, {
+        email: email,
+        password: password
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +35,6 @@ export default function LoginForm({ setAlertShow, setAlertMessage, storeEmail, s
       setAlertShow(true);
       return;
     }
-    storeEmail.current = em;
 
     const pw = password.current.value?.trim();
     if (!checkPassword(pw)) {
@@ -34,7 +42,7 @@ export default function LoginForm({ setAlertShow, setAlertMessage, storeEmail, s
       setAlertShow(true);
       return;
     }
-    storePassword.current = pw;
+    handleLogin(em, pw)
   };
 
   ///////////////////////////////////
@@ -63,7 +71,7 @@ export default function LoginForm({ setAlertShow, setAlertMessage, storeEmail, s
       <form className="mt-2" onSubmit={handleSubmit} noValidate>
         <LabelInputContainer className="mt-1.5 mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="riley77@gmail.com" type="email" ref={email} />
+          <Input id="email" placeholder="charlotte92@gmail.com" type="email" ref={email} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="password">Password</Label>
