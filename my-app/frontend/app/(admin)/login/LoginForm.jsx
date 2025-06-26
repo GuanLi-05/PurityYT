@@ -35,12 +35,12 @@ export default function LoginForm({ setAlertShow, setAlertMessage }) {
       }
       setAlertShow(true);
     } else {
-      router.push("/");
+      router.push("/dashboard");
     }
   };
 
   const handleLoginGoogle = async () => {
-    await signIn("google", { callbackUrl: "/" });
+    await signIn("google", { callbackUrl: "/dashboard" });
   }
 
   const handleSubmit = async (e) => {

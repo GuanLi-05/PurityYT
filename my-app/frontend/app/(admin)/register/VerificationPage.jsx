@@ -68,7 +68,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
       })
       setShowAlert("success");
       alertMessage.current = res.data.message;
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";

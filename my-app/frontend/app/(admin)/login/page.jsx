@@ -5,7 +5,7 @@ import LoginForm from './LoginForm'
 import { AlertError } from '../../Alert'
 import { Transition } from '@headlessui/react';
 
-export default function Register() {
+export default function Login() {
   const [alertShow, setAlertShow] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState(false);
 

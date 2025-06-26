@@ -70,7 +70,7 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
   };
 
   const handleRegisterGoogle = async () => {
-    await signIn("google", { callbackUrl: "/" });
+    await signIn("google", { callbackUrl: "/dashboard" });
   }
 
   ///////////////////////////////////

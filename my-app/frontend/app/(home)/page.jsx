@@ -1,29 +1,22 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import CarouselHome from "../Carousel"
-import ModeToggle from '../ModeToggle'
-import { signOut } from "next-auth/react";
+import React from "react";
 import { useSession } from "next-auth/react";
-import Load from "../Load";
+import { useRouter } from "next/navigation";
+import CarouselHome from "../Carousel";
 
 export default function Home() {
+  const router = useRouter();
   const { data: session, status } = useSession();
+
+  React.useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status]);
 
   return (
     <div>
-      {status === "loading" ? (
-        <Load />
-      ) : status === "authenticated" ? (
-        <div>
-          <ModeToggle />
-          <Button onClick={() => signOut({ callbackUrl: '/login' })}>
-            Logout
-          </Button>
-          <p>Home Page</p>
-        </div >
-      ) : (
-        <CarouselHome />
-      )}
+      <CarouselHome />
     </div>
   )
 }
