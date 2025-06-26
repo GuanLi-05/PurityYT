@@ -2,7 +2,7 @@
 
 import React from 'react'
 import RegisterForm from './RegisterForm'
-import { AlertError } from './Alert'
+import { AlertError } from '../Alert'
 import VerificationPage from './VerificationPage'
 import { Transition } from '@headlessui/react';
 

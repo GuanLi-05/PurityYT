@@ -4,13 +4,14 @@ import CarouselHome from "./Carousel"
 import ModeToggle from './ModeToggle'
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import Load from "./Load";
 
 export default function Home() {
   const { data: session, status } = useSession();
 
   return (
     status === "loading" ? (
-      <p>Loading...</p>
+      <Load />
     ) : status === "authenticated" ? (
       <div>
         <ModeToggle />

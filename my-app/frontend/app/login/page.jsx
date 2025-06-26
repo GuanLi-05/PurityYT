@@ -2,7 +2,7 @@
 
 import React from 'react'
 import LoginForm from './LoginForm'
-import { AlertError } from './Alert'
+import { AlertError } from '../Alert'
 import { Transition } from '@headlessui/react';
 
 export default function Register() {
