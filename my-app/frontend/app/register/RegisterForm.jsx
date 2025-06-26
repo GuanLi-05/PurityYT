@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import Link from 'next/link';
 
-export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyShow, storeEmail }) {
+export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyShow, storeEmail, storeFname, storeLname, storePassword }) {
   const router = useRouter();
   //router.push("/")
   const firstName = React.useRef();
@@ -28,6 +28,7 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
       setAlertShow(true);
       return;
     }
+    storeFname.current = fn;
 
     const ln = lastName.current.value?.trim();
     console.log("Last name: " + ln); // print debug
@@ -36,6 +37,7 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
       setAlertShow(true);
       return;
     }
+    storeLname.current = ln;
 
     // add check: email doesnt already exist
     const em = email.current.value?.trim();
@@ -62,7 +64,7 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
       setAlertShow(true);
       return;
     }
-
+    storePassword.current = pw;
     setVerifyShow(true);
   };
 

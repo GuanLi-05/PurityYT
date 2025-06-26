@@ -10,7 +10,10 @@ export default function Register() {
   const [alertShow, setAlertShow] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState(false);
   const [verifyShow, setVerifyShow] = React.useState(false);
+  const storeFname = React.useRef();
+  const storeLname = React.useRef();
   const storeEmail = React.useRef();
+  const storePassword = React.useRef();
 
   /* Dismiss alert on keydown */
   React.useEffect(() => {
@@ -46,11 +49,19 @@ export default function Register() {
           setAlertMessage={setAlertMessage}
           setVerifyShow={setVerifyShow}
           storeEmail={storeEmail}
+          storeFname={storeFname}
+          storeLname={storeLname}
+          storePassword={storePassword}
         />
       </div>
     ) : (
       <div className="flex justify-center items-center h-screen">
-        <VerificationPage storeEmail={storeEmail} />
+        <VerificationPage
+          storeEmail={storeEmail}
+          storeFname={storeFname}
+          storeLname={storeLname}
+          storePassword={storePassword}
+        />
       </div>
     )
   );

@@ -7,7 +7,9 @@ import { AlertError, AlertSuccess } from './Alert';
 import Load from './Load';
 import { Transition } from '@headlessui/react';
 
-export default function VerificationPage({ storeEmail }) {
+const URL = 'http://localhost:8000';
+
+export default function VerificationPage({ storeEmail, storeFname, storeLname, storePassword }) {
   const [showAlert, setShowAlert] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const alertMessage = useRef("");
@@ -17,7 +19,7 @@ export default function VerificationPage({ storeEmail }) {
   const sendCode = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:8000/email/verify/send', {
+      const res = await axios.post(`${URL}/email/verify/send`, {
         "email": storeEmail.current,
       })
       setShowAlert("success");
@@ -27,6 +29,7 @@ export default function VerificationPage({ storeEmail }) {
     } catch (error) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
+      alertHeader.current = error.response?.data?.header || "Something Went Wrong";
       console.log(error.response?.data?.error);
       setLoading(false);
     }
@@ -41,7 +44,7 @@ export default function VerificationPage({ storeEmail }) {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:8000/email/verify/confirm', {
+      const res = await axios.post(`${URL}/email/verify/confirm`, {
         email: storeEmail.current,
         code: code
       })
@@ -52,6 +55,19 @@ export default function VerificationPage({ storeEmail }) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
       alertHeader.current = error.response?.data?.header || "Something Went Wrong";
+      console.log(error.response?.data?.error);
+    }
+  }
+
+  const registerUser = async () => {
+    try {
+      const res = axios.post(`${URL}/register`, {
+        fname: storeFname,
+        lname: storeLname,
+        email: storeEmail,
+        password: storePassword
+      })
+    } catch (error) {
       console.log(error.response?.data?.error);
     }
   }

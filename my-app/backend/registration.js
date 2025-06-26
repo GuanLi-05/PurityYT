@@ -11,6 +11,15 @@ export const handleRegisterRouter = express.Router();
 // Routes
 ///////////////////////////////////
 
+handleRegisterRouter.post('', (req, res) => {
+  const { fname, lname, email, password } = req.body;
+  console.log(fname + lname + email + password);
+})
+
+///////////////////////////////////
+// Encryption
+///////////////////////////////////
+
 const saltRounds = 10;
 const hashedPassword = await bcrypt.hash(password, saltRounds);
 const isValid = await bcrypt.compare(submittedPassword, user.password)
