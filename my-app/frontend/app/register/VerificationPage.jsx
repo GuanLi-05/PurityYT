@@ -2,19 +2,21 @@
 
 import axios from 'axios'
 import OTPComponent from './OTPComponent'
-import React, { useRef } from 'react'
+import React from 'react'
 import { AlertError, AlertSuccess } from './Alert';
 import Load from './Load';
 import { Transition } from '@headlessui/react';
+import { useRouter } from "next/navigation"
 
 const URL = 'http://localhost:8000';
 
 export default function VerificationPage({ storeEmail, storeFname, storeLname, storePassword }) {
   const [showAlert, setShowAlert] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
-  const alertMessage = useRef("");
-  const alertHeader = useRef("");
+  const alertMessage = React.useRef("");
+  const alertHeader = React.useRef("");
   const sentRef = React.useRef(false);
+  const router = useRouter();
 
   /* Send email verification request to backend */
   const sendCode = async () => {
@@ -45,14 +47,11 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
       return;
     }
     try {
-      const res = await axios.post(`${URL}/email/verify/confirm`, {
+      await axios.post(`${URL}/email/verify/confirm`, {
         email: storeEmail.current,
         code: code
       })
       registerUser();
-      setShowAlert("success");
-      alertMessage.current = res.data.message;
-      console.log(res.data.message);
     } catch (error) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
@@ -64,12 +63,16 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
   /* Register user into DB */
   const registerUser = async () => {
     try {
-      const res = await axios.post(`${URL}/register`, {
+      await axios.post(`${URL}/register`, {
         fname: storeFname.current,
         lname: storeLname.current,
         email: storeEmail.current,
         password: storePassword.current
       })
+      setShowAlert("success");
+      alertMessage.current = res.data.message;
+      console.log(res.data.message);
+      router.push("/");
     } catch (error) {
       console.log(error.response?.data?.error);
     }
@@ -78,8 +81,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
   /* Send email verification on mount */
   React.useEffect(() => {
     if (!sentRef.current) {
-      //sendCode();  TEMP email verif BYPASS for testing
-      registerUser(); // Remove this after
+      sendCode();
       sentRef.current = true;
     }
   }, []);

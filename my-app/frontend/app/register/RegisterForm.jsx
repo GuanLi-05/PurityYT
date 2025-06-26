@@ -3,11 +3,13 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useRouter } from 'next/navigation';
+import axios from "axios";
 import {
   IconBrandGoogle,
 } from "@tabler/icons-react";
 import Link from 'next/link';
+
+const URL = 'http://localhost:8000';
 
 export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyShow, storeEmail, storeFname, storeLname, storePassword }) {
   const firstName = React.useRef();
@@ -16,7 +18,7 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
   const password = React.useRef();
   const confirmPassword = React.useRef();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const fn = firstName.current.value?.trim();
@@ -35,10 +37,15 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
     }
     storeLname.current = ln;
 
-    // add check: email doesnt already exist
     const em = email.current.value?.trim();
     if (!checkEmail(em)) {
       setAlertMessage("Invalid email address");
+      setAlertShow(true);
+      return;
+    }
+    const isUnique = await checkUniqueEmail(em);
+    if (!isUnique) {
+      setAlertMessage("This email is already registered");
       setAlertShow(true);
       return;
     }
@@ -83,6 +90,20 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
 
   const checkConfirm = (pw, cpw) => {
     return cpw != null && cpw != undefined && pw === cpw;
+  }
+
+  const checkUniqueEmail = async (email) => {
+    try {
+      const res = await axios.post(`${URL}/email/unique`, {
+        email: email
+      })
+      return res.data.unique;
+    } catch (error) {
+      console.log(error);
+      setAlertMessage(error);
+      setAlertShow(true);
+      return false;
+    }
   }
 
   ///////////////////////////////////

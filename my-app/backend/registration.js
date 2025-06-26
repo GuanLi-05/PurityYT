@@ -16,14 +16,6 @@ async function encryptPassword(password) {
   }
 }
 
-async function verifyPassword(password) {
-  try {
-    const isValid = await bcrypt.compare(password, user.password)
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
 ///////////////////////////////////
 // Route exporting for app.js
 ///////////////////////////////////
@@ -36,10 +28,9 @@ export const handleRegisterRouter = express.Router();
 
 handleRegisterRouter.post('/register', async (req, res) => {
   const { fname, lname, email, password } = req.body;
-  console.log(fname + lname + email + password);
   try {
     const encPassword = await encryptPassword(password);
-    const newUser = await prisma.credentials.create({
+    await prisma.credentials.create({
       data: {
         firstName: fname,
         lastName: lname,
@@ -47,7 +38,7 @@ handleRegisterRouter.post('/register', async (req, res) => {
         password: encPassword,
       },
     });
-    res.status(201).json({ message: "User registered", user: newUser });
+    res.status(201).json({ message: "Completing registration." });
   } catch (e) {
     console.error(e);
     console.log(e);

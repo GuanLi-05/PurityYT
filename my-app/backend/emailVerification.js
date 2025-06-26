@@ -2,6 +2,7 @@ import express from 'express'
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import Redis from 'redis';
+import prisma from './prisma.js'
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ const transporter = nodemailer.createTransport({
 
 export const sendCodeRouter = express.Router();
 export const verifyCodeRouter = express.Router();
+export const checkUniqueEmail = express.Router();
 
 ///////////////////////////////////
 // Routes
@@ -102,5 +104,26 @@ verifyCodeRouter.post("/email/verify/confirm", async (req, res) => {
   }
 })
 
+/* Checks if email is unique */
+checkUniqueEmail.post("/email/unique", async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: "Email failed to parse. Please try again later." });
+  }
 
+  try {
+    const find = await prisma.credentials.findUnique({
+      where: { email },
+    });
+
+    if (find) {
+      return res.json({ unique: false });
+    } else {
+      return res.json({ unique: true });
+    }
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
 
