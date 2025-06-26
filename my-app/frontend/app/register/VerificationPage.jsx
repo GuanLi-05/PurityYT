@@ -14,6 +14,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
   const [loading, setLoading] = React.useState(true);
   const alertMessage = useRef("");
   const alertHeader = useRef("");
+  const sentRef = React.useRef(false);
 
   /* Send email verification request to backend */
   const sendCode = async () => {
@@ -61,6 +62,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
   }
 
   const registerUser = async () => {
+    alert("called");
     try {
       const res = axios.post(`${URL}/register`, {
         fname: storeFname,
@@ -75,9 +77,12 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
 
   /* Send email verification on mount */
   React.useEffect(() => {
-    (async function () {
-      await sendCode();
-    })();
+    alert("debug");
+    if (!sentRef.current) {
+      alert("internal debug");
+      sendCode();
+      sentRef.current = true;
+    }
   }, []);
 
   /* Dismiss alert on keydown */

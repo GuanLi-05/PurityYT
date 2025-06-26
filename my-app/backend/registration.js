@@ -51,7 +51,7 @@ export const handleRegisterRouter = express.Router();
 // Routes
 ///////////////////////////////////
 
-handleRegisterRouter.post('', async (req, res) => {
+handleRegisterRouter.post('/register', async (req, res) => {
   const { fname, lname, email, password } = req.body;
   console.log(fname + lname + email + password);
   try {
@@ -64,7 +64,6 @@ handleRegisterRouter.post('', async (req, res) => {
         password: encPassword,
       },
     });
-
     res.status(201).json({ message: "User registered", user: newUser });
   } catch (error) {
     console.error(error);
