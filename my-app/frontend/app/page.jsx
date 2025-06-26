@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import CarouselDemo from "./CarouselDemo"
+import CarouselHome from "./Carousel"
 import ModeToggle from './ModeToggle'
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
@@ -14,15 +14,13 @@ export default function Home() {
     ) : status === "authenticated" ? (
       <div>
         <ModeToggle />
-        <Button>Click me</Button>
-        <CarouselDemo />
         <Button onClick={() => signOut({ callbackUrl: '/login' })}>
           Logout
         </Button>
-
+        <p>Home Page</p>
       </div >
     ) : (
-      <p>You are not logged in.</p>
+      <CarouselHome />
     )
   )
 }
