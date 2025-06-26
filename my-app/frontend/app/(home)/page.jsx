@@ -3,6 +3,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import CarouselHome from "../Carousel";
+import Load from "../Load";
 
 export default function Home() {
   const router = useRouter();
@@ -15,8 +16,11 @@ export default function Home() {
   }, [status]);
 
   return (
-    <div>
+
+    status === "loading" ? (
+      <Load />
+    ) : (status === "unauthenticated" && <>
       <CarouselHome />
-    </div>
+    </>)
   )
 }

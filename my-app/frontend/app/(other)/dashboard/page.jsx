@@ -18,18 +18,16 @@ export default function Home() {
   }, [status]);
 
   return (
-    <div>
-      {status === "authenticated" ? (
-        <div>
-          <ModeToggle />
-          <Button onClick={() => signOut({ callbackUrl: '/login' })}>
-            Logout
-          </Button>
-          <p>Home Page</p>
-        </div >
-      ) : (
-        <Load />
-      )}
-    </div>
+    status === "authenticated" ? (
+      <div>
+        <ModeToggle />
+        <Button onClick={() => signOut({ callbackUrl: '/login' })}>
+          Logout
+        </Button>
+        <p>Home Page</p>
+      </div >
+    ) : (
+      <Load />
+    )
   )
 }
