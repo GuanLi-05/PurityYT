@@ -1,23 +1,6 @@
 import bcrypt from 'bcrypt'
 import express from 'express'
-import { PrismaClient } from '@prisma/client'
-
-///////////////////////////////////
-// Prisma
-///////////////////////////////////
-
-const prisma = new PrismaClient()
-
-process.on('SIGINT', async () => {
-  await prisma.$disconnect();
-  process.exit(0);
-});
-
-process.on('SIGTERM', async () => {
-  await prisma.$disconnect();
-  process.exit(0);
-});
-
+import prisma from './prisma.js'
 
 ///////////////////////////////////
 // Encryption
@@ -65,9 +48,10 @@ handleRegisterRouter.post('/register', async (req, res) => {
       },
     });
     res.status(201).json({ message: "User registered", user: newUser });
-  } catch (error) {
+  } catch (e) {
     console.error(e);
     console.log(e);
     return res.status(500).json({ error: "Please try again later." });
   }
 })
+

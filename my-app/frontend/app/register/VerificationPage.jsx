@@ -64,11 +64,11 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
   /* Register user into DB */
   const registerUser = async () => {
     try {
-      const res = axios.post(`${URL}/register`, {
-        fname: storeFname,
-        lname: storeLname,
-        email: storeEmail,
-        password: storePassword
+      const res = await axios.post(`${URL}/register`, {
+        fname: storeFname.current,
+        lname: storeLname.current,
+        email: storeEmail.current,
+        password: storePassword.current
       })
     } catch (error) {
       console.log(error.response?.data?.error);

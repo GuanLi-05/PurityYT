@@ -10,8 +10,6 @@ import {
 import Link from 'next/link';
 
 export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyShow, storeEmail, storeFname, storeLname, storePassword }) {
-  const router = useRouter();
-  //router.push("/")
   const firstName = React.useRef();
   const lastName = React.useRef();
   const email = React.useRef();
@@ -54,7 +52,6 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
     }
 
     const cpw = confirmPassword.current.value?.trim();
-    console.log("Confirm: " + cpw); // print debug
     if (!checkConfirm(pw, cpw)) {
       setAlertMessage("Passwords do not match");
       setAlertShow(true);
