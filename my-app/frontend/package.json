@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
+    "@prisma/client": "^6.10.1",
     "@radix-ui/react-label": "^2.1.7",
     "@tabler/icons-react": "^3.34.0",
     "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",
@@ -32,6 +34,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
+    "prisma": "^6.10.1",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.4",
     "typescript": "^5"
