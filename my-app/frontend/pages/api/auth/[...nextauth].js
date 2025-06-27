@@ -26,6 +26,9 @@ import GoogleProvider from "next-auth/providers/google";
  * 
  * pages:
  *  - redirects to /login when rerouting client for login
+ * 
+ * secret:
+ * - encoding for JWT token
  */
 export default NextAuth({
   providers: [
@@ -68,5 +71,6 @@ export default NextAuth({
   },
   pages: {
     signIn: '/login'
-  }
+  },
+  secret: process.env.NEXTAUTH_SECRET
 });

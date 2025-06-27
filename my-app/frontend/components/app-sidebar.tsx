@@ -19,19 +19,24 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
+    title: "Subscriptions",
     url: "#",
     icon: Inbox,
   },
   {
-    title: "Calendar",
+    title: "History",
     url: "#",
     icon: Calendar,
   },
   {
-    title: "Search",
+    title: "Watch Later",
     url: "#",
     icon: Search,
+  },
+  {
+    title: "Statistics",
+    url: "#",
+    icon: Calendar,
   },
   {
     title: "Settings",
