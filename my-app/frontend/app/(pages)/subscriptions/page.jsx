@@ -6,6 +6,7 @@ import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import Load from "../../Load";
 import { useRouter } from "next/navigation";
+import Logo from "../../Logo";
 
 export default function Home() {
   const router = useRouter();
@@ -20,11 +21,12 @@ export default function Home() {
   return (
     status === "authenticated" ? (
       <div>
+        <Logo />
         <ModeToggle />
         <Button onClick={() => signOut({ callbackUrl: '/login' })}>
           Logout
         </Button>
-        <p>Home Page</p>
+        <p>Subscription</p>
       </div >
     ) : (
       <Load />
