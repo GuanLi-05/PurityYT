@@ -5,6 +5,9 @@ import RegisterForm from './RegisterForm'
 import { AlertError } from '../../Alert'
 import VerificationPage from './VerificationPage'
 import { Transition } from '@headlessui/react';
+import { useSession } from "next-auth/react";
+import Load from "../../Load";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [alertShow, setAlertShow] = React.useState(false);
@@ -14,6 +17,15 @@ export default function Register() {
   const storeLname = React.useRef();
   const storeEmail = React.useRef();
   const storePassword = React.useRef();
+
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  React.useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status]);
 
   /* Dismiss alert on keydown */
   React.useEffect(() => {
@@ -27,42 +39,46 @@ export default function Register() {
   }, [])
 
   return (
-    !verifyShow ? (
-      <div className="flex justify-center items-center h-[92vh]">
-        <Transition
-          show={alertShow}
-          enter="transition ease-out duration-300"
-          enterFrom="opacity-0 translate-y-4"
-          enterTo="opacity-100 translate-y-0"
-          leave="transition ease-in duration-200"
-          leaveFrom="opacity-100 translate-y-0"
-          leaveTo="opacity-0 translate-y-4"
-          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
-        >
-          <div>
-            <AlertError header="Invalid Registration Details" message={alertMessage} />
-          </div>
-        </Transition>
+    status === "unauthenticated" ? (
+      !verifyShow ? (
+        <div className="flex justify-center items-center h-[92vh]">
+          <Transition
+            show={alertShow}
+            enter="transition ease-out duration-300"
+            enterFrom="opacity-0 translate-y-4"
+            enterTo="opacity-100 translate-y-0"
+            leave="transition ease-in duration-200"
+            leaveFrom="opacity-100 translate-y-0"
+            leaveTo="opacity-0 translate-y-4"
+            className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50"
+          >
+            <div>
+              <AlertError header="Invalid Registration Details" message={alertMessage} />
+            </div>
+          </Transition>
 
-        <RegisterForm
-          setAlertShow={setAlertShow}
-          setAlertMessage={setAlertMessage}
-          setVerifyShow={setVerifyShow}
-          storeEmail={storeEmail}
-          storeFname={storeFname}
-          storeLname={storeLname}
-          storePassword={storePassword}
-        />
-      </div>
+          <RegisterForm
+            setAlertShow={setAlertShow}
+            setAlertMessage={setAlertMessage}
+            setVerifyShow={setVerifyShow}
+            storeEmail={storeEmail}
+            storeFname={storeFname}
+            storeLname={storeLname}
+            storePassword={storePassword}
+          />
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-screen">
+          <VerificationPage
+            storeEmail={storeEmail}
+            storeFname={storeFname}
+            storeLname={storeLname}
+            storePassword={storePassword}
+          />
+        </div>
+      )
     ) : (
-      <div className="flex justify-center items-center h-screen">
-        <VerificationPage
-          storeEmail={storeEmail}
-          storeFname={storeFname}
-          storeLname={storeLname}
-          storePassword={storePassword}
-        />
-      </div>
+      <Load />
     )
-  );
+  )
 }
