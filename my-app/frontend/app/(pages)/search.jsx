@@ -15,22 +15,35 @@ export default function Search() {
       const res = await axios.post(`${URL}/search`, {
         search: input
       });
+      console.log(res);
+      alert(res);
     } catch (error) {
-
+      alert(error)
+      // show alert page
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        placeholder="Search"
-        name="searchInput"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <Button type="submit">Submit</Button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          placeholder="Search"
+          name="searchInput"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+      {/*  <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/gobblygookid"
+        frameborder="0"
+        allowfullscreen
+      ></iframe> */}
+    </>
+
   )
 
 }
