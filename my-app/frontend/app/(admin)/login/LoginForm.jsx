@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const URL = 'http://localhost:8000';
+const URL = process.env.BACKEND_URL;
 
 export default function LoginForm({ setAlertShow, setAlertMessage }) {
   const router = useRouter();

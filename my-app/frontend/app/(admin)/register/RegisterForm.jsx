@@ -10,7 +10,7 @@ import {
 import Link from 'next/link';
 import { signIn } from "next-auth/react";
 
-const URL = 'http://localhost:8000';
+const URL = process.env.BACKEND_URL;
 
 export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyShow, storeEmail, storeFname, storeLname, storePassword }) {
   const firstName = React.useRef();

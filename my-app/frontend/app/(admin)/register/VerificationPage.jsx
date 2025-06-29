@@ -8,7 +8,7 @@ import Load from '../../Load';
 import { Transition } from '@headlessui/react';
 import { useRouter } from "next/navigation"
 
-const URL = 'http://localhost:8000';
+const URL = process.env.BACKEND_URL;
 
 export default function VerificationPage({ storeEmail, storeFname, storeLname, storePassword }) {
   const [showAlert, setShowAlert] = React.useState(null);

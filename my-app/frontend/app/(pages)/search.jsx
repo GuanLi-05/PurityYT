@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import React from "react"
-import axios from axios;
+import axios from "axios";
 
 const URL = process.env.BACKEND_URL;
 
