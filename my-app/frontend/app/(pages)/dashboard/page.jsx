@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import Load from "../../Load";
 import { useRouter } from "next/navigation";
 import Logo from "../../Logo";
+import Search from '../search'
 
 export default function Home() {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function Home() {
         <Button onClick={() => signOut({ callbackUrl: '/login' })}>
           Logout
         </Button>
+        <Search />
         <p>Home Page</p>
       </div >
     ) : (
