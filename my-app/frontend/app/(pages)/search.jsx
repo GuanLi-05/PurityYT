@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import React from "react"
 import axios from "axios";
 
-const URL = process.env.BACKEND_URL;
+const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function Search() {
   const [input, setInput] = React.useState("");
@@ -11,9 +11,13 @@ export default function Search() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     alert(input);
-    axios.post(`${URL}/search`, {
-      search: input
-    })
+    try {
+      const res = await axios.post(`${URL}/search`, {
+        search: input
+      });
+    } catch (error) {
+
+    }
   }
 
   return (
