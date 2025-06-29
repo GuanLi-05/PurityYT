@@ -1,7 +1,5 @@
 import express from "express"
 
-
-
 ///////////////////////////////////
 // Route exporting for app.js
 ///////////////////////////////////
@@ -16,3 +14,4 @@ searchRouter.post('/search', async (req, res) => {
   const { search } = req.body;
   console.log(search);
 })
+

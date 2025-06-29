@@ -1,10 +1,7 @@
 import express from 'express'
 import nodemailer from 'nodemailer'
-import dotenv from 'dotenv'
 import Redis from 'redis';
 import prisma from './prisma.js'
-
-dotenv.config();
 
 ///////////////////////////////////
 // Redis Setup

@@ -7,8 +7,9 @@ import { AlertError, AlertSuccess } from '../../Alert';
 import Load from '../../Load';
 import { Transition } from '@headlessui/react';
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react";
 
-const URL = process.env.BACKEND_URL;
+const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function VerificationPage({ storeEmail, storeFname, storeLname, storePassword }) {
   const [showAlert, setShowAlert] = React.useState(null);
@@ -68,13 +69,32 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
       })
       setShowAlert("success");
       alertMessage.current = res.data.message;
-      router.push("/dashboard");
+      handleLogin(storeEmail.current, storePassword.current);
     } catch (error) {
       setShowAlert("error");
       alertMessage.current = error.response?.data?.error || "";
       alertHeader.current = error.response?.data?.header || "Something Went Wrong";
     }
   }
+
+  const handleLogin = async (email, password) => {
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: email,
+      password: password
+    });
+
+    if (res.error) {
+      if (res.error === "CredentialsSignin") {
+        setAlertMessage("Incorrect email or password.");
+      } else {
+        setAlertMessage(res.error + ": Log in denied.");
+      }
+      setAlertShow(true);
+    } else {
+      router.push("/dashboard");
+    }
+  };
 
   /* Send email verification on mount */
   React.useEffect(() => {
