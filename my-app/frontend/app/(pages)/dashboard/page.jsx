@@ -8,10 +8,13 @@ import Load from "../../Load";
 import { useRouter } from "next/navigation";
 import Logo from "../../Logo";
 import Search from '../search'
+import SearchResults from "./SearchResults";
 
 export default function Home() {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const videoData = React.useRef([]);
+  const [showSearch, setShowSearch] = React.useState(false)
 
   React.useEffect(() => {
     if (status === "unauthenticated") {
@@ -21,15 +24,19 @@ export default function Home() {
 
   return (
     status === "authenticated" ? (
-      <div>
-        <Logo />
-        <ModeToggle />
-        <Button onClick={() => signOut({ callbackUrl: '/login' })}>
-          Logout
-        </Button>
-        <Search />
-        <p>Home Page</p>
-      </div >
+      showSearch ? (
+        <SearchResults videoData={videoData} />
+      ) : (
+        <div>
+          <Logo />
+          <ModeToggle />
+          <Button onClick={() => signOut({ callbackUrl: '/login' })}>
+            Logout
+          </Button>
+          <Search videoData={videoData} setShowSearch={setShowSearch} />
+          <p>Home Page</p>
+        </div >
+      )
     ) : (
       <Load />
     )

@@ -15,7 +15,7 @@ const API_KEY = process.env.YOUTUBE_API;
 const maxResults = 3;
 
 async function searchYoutube(searchQuery) {
-  const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+  const res = await axios.get('https://www.googleapis.com/youtube/v3/search', {
     params: {
       part: 'snippet',
       q: searchQuery,
@@ -25,12 +25,28 @@ async function searchYoutube(searchQuery) {
     },
   });
 
-  const videos = response.data.items.map(item => ({
+  const videos = res.data.items.map(item => ({
     title: item.snippet.title,
     videoId: item.id.videoId,
+    channelId: item.snippet.channelId,
   }));
 
-  console.log(videos);
+  const videoIds = videos.map(item => item.videoId).join(',');
+
+  const resStat = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
+    params: {
+      part: 'statistics,contentDetails',
+      id: videoIds,
+      key: API_KEY,
+    },
+  });
+
+
+  resStat.data.items.forEach((item, i) => {
+    videos[i].viewCount = item.statistics.viewCount;
+    videos[i].duration = item.contentDetails.duration;
+  });
+
   return videos;
 }
 
