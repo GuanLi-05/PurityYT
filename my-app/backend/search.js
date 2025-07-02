@@ -29,6 +29,7 @@ async function searchYoutube(searchQuery) {
     title: item.snippet.title,
     videoId: item.id.videoId,
     channelId: item.snippet.channelId,
+    channel: item.snippet.channelTitle
   }));
 
   const videoIds = videos.map(item => item.videoId).join(',');

@@ -10,7 +10,6 @@ export default function Search({ videoData, setShowSearch }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(input);
     try {
       const res = await axios.post(`${URL}/search`, {
         search: input
