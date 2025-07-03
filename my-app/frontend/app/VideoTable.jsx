@@ -1,3 +1,4 @@
+'use client'
 import {
   Table,
   TableBody,
@@ -8,9 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useRouter } from "next/navigation";
 
 export function VideoTable({ videoData }) {
-  console.log(videoData.current.videos);
+  const router = useRouter();
   return (
     <Table>
       <TableCaption>End of Results.</TableCaption>
@@ -25,10 +27,10 @@ export function VideoTable({ videoData }) {
       <TableBody>
         {videoData.current.videos.map((video) => (
           <TableRow key={video.videoId}>
-            <TableCell className="font-medium">{video.title}</TableCell>
-            <TableCell>{video.channel}</TableCell>
-            <TableCell>{video.duration}</TableCell>
-            <TableCell className="text-right">{video.viewCount}</TableCell>
+            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="font-medium">{video.title}</TableCell>
+            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)}>{video.channel}</TableCell>
+            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)}>{video.duration}</TableCell>
+            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-right">{video.viewCount}</TableCell>
           </TableRow>
         ))}
       </TableBody>
