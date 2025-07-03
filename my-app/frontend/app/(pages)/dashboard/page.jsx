@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Logo from "../../Logo";
 import Search from '../search'
 import SearchResults from "./SearchResults";
+import { Profile } from "../../Profile";
 
 export default function Home() {
   const router = useRouter();
@@ -28,7 +29,11 @@ export default function Home() {
         <SearchResults videoData={videoData} />
       ) : (
         <div>
-          <Logo />
+          <div className="w-[97vw] h-auto flex flex-row justify-between items-center">
+            <Logo />
+            <Profile />
+          </div>
+
           <ModeToggle />
           <Button onClick={() => signOut({ callbackUrl: '/login' })}>
             Logout

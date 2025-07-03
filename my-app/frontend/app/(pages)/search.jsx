@@ -25,14 +25,16 @@ export default function Search({ videoData, setShowSearch }) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          placeholder="Search"
-          name="searchInput"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <Button type="submit">Submit</Button>
+        <div className=" flex flex-row">
+          <Input
+            type="text"
+            placeholder="Search"
+            name="searchInput"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </>
 

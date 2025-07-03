@@ -43,7 +43,7 @@ async function searchYoutube(searchQuery) {
   });
 
 
-  resStat.data.items.forEach((item, i) => {
+  resStat.data.items.forEach((item, i) => { // needs debugging
     videos[i].viewCount = item.statistics.viewCount;
     videos[i].duration = item.contentDetails.duration;
   });
