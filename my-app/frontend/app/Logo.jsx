@@ -1,14 +1,12 @@
 import Image from "next/image"
 import LogoImage from "../public/Logo.png"
 import DarkLogoImage from "../public/dark_Logo.png"
-import { useRouter } from "next/navigation"
 
 
 export default function Logo() {
-  const router = useRouter();
 
   const handleClick = () => {
-    router.push('/dashboard');
+    window.location.href = "/dashboard"
   }
 
   return (
