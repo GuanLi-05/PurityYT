@@ -1,8 +1,5 @@
 "use client"
-import { Button } from "@/components/ui/button"
 import React from "react";
-import ModeToggle from '../../ModeToggle'
-import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import Load from "../../Load";
 import { useRouter } from "next/navigation";
@@ -36,12 +33,7 @@ export default function Home() {
           </>
         ) : (
           <div>
-            <ModeToggle />
-            <Button onClick={() => signOut({ callbackUrl: '/login' })}>
-              Logout
-            </Button>
             <Search videoData={videoData} setShowSearch={setShowSearch} />
-            <p>Home Page</p>
           </div >
         )}
       </div>
