@@ -33,3 +33,6 @@ export default function Home() {
     )
   )
 }
+
+// whitelist ?
+// veto tokens ?
