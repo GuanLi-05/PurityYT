@@ -35,4 +35,6 @@ export default function Home() {
 }
 
 // whitelist ?
-// veto tokens ?
+// veto tokens ? or x amount of time to spend on non-productive
+// subscription autowhitelist ? only whitelist videos released x days ago
+// lock settings
