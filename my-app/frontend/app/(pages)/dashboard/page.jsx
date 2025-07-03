@@ -23,19 +23,21 @@ export default function Home() {
   return (
     status === "authenticated" ? (
       <div>
-        <div className="w-[97vw] h-auto flex flex-row justify-between items-center bg-red-500">
+        <div className="h-auto flex flex-row justify-between items-center sticky top-0 z-10">
           <Logo />
-          <SearchBar videoData={videoData} setShowSearch={setShowSearch} className="mt-2.5" />
-          <Profile />
+          <div className="w-[37vw]">
+            <SearchBar videoData={videoData} setShowSearch={setShowSearch} />
+          </div>
+          <div className="mr-[1vw]">
+            <Profile className="mr-4" />
+          </div>
         </div>
         {showSearch ? (
-          <>
-            <SearchResults videoData={videoData} />
-          </>
+          <SearchResults videoData={videoData} />
         ) : (
           <div>
             Body
-          </div >
+          </div>
         )}
       </div>
     ) : (

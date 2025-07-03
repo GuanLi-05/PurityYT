@@ -39,9 +39,13 @@ export default function RootLayout({
         >
           <SessionProviderWrapper>
             <SidebarProvider>
-              <AppSidebar />
-              <SidebarTrigger />
-              {children}
+              <div className="flex min-h-screen w-full">
+                <AppSidebar />
+                <SidebarTrigger className="mt-5.5 ml-1" />
+                <div className="flex-1">
+                  {children}
+                </div>
+              </div>
             </SidebarProvider>
           </SessionProviderWrapper>
         </ThemeProvider>

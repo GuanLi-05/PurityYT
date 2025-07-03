@@ -28,7 +28,7 @@ export default function SearchBar({ videoData, setShowSearch }) {
 
   return (
     theme === "dark" ? (
-      <form onSubmit={handleSubmit} className="w-full max-w-md">
+      <form onSubmit={handleSubmit} className="w-full max-w-xl">
         <div className="flex overflow-hidden rounded-md bg-[#272729]">
           <input
             type="text"
@@ -40,7 +40,7 @@ export default function SearchBar({ videoData, setShowSearch }) {
           />
           <button
             type="submit"
-            className="flex items-center justify-center rounded-r-md rounded-l-none border-none bg-transparent px-4 py-2 text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
+            className="flex items-center justify-center rounded-r-md rounded-l-none border-none bg-transparent px-4 py-2 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white"
             aria-label="Submit search"
           >
             <Search className="w-5 h-5" />
