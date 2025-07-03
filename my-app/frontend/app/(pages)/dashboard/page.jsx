@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import Load from "../../Load";
 import { useRouter } from "next/navigation";
 import Logo from "../../Logo";
-import Search from '../search'
+import SearchBar from '../../SearchBar'
 import SearchResults from "./SearchResults";
 import { Profile } from "../../Profile";
 
@@ -23,8 +23,9 @@ export default function Home() {
   return (
     status === "authenticated" ? (
       <div>
-        <div className="w-[97vw] h-auto flex flex-row justify-between items-center">
+        <div className="w-[97vw] h-auto flex flex-row justify-between items-center bg-red-500">
           <Logo />
+          <SearchBar videoData={videoData} setShowSearch={setShowSearch} className="mt-2.5" />
           <Profile />
         </div>
         {showSearch ? (
@@ -33,7 +34,7 @@ export default function Home() {
           </>
         ) : (
           <div>
-            <Search videoData={videoData} setShowSearch={setShowSearch} />
+            Body
           </div >
         )}
       </div>
