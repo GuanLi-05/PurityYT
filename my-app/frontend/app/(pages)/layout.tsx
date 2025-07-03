@@ -41,7 +41,7 @@ export default function RootLayout({
             <SidebarProvider>
               <div className="flex min-h-screen w-full">
                 <AppSidebar />
-                <SidebarTrigger className="mt-5.5 ml-1" />
+                <SidebarTrigger className="mt-[25px] ml-1.5" />
                 <div className="flex-1">
                   {children}
                 </div>
