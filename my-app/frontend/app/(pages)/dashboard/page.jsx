@@ -25,23 +25,26 @@ export default function Home() {
 
   return (
     status === "authenticated" ? (
-      showSearch ? (
-        <SearchResults videoData={videoData} />
-      ) : (
-        <div>
-          <div className="w-[97vw] h-auto flex flex-row justify-between items-center">
-            <Logo />
-            <Profile />
-          </div>
-
-          <ModeToggle />
-          <Button onClick={() => signOut({ callbackUrl: '/login' })}>
-            Logout
-          </Button>
-          <Search videoData={videoData} setShowSearch={setShowSearch} />
-          <p>Home Page</p>
-        </div >
-      )
+      <div>
+        <div className="w-[97vw] h-auto flex flex-row justify-between items-center">
+          <Logo />
+          <Profile />
+        </div>
+        {showSearch ? (
+          <>
+            <SearchResults videoData={videoData} />
+          </>
+        ) : (
+          <div>
+            <ModeToggle />
+            <Button onClick={() => signOut({ callbackUrl: '/login' })}>
+              Logout
+            </Button>
+            <Search videoData={videoData} setShowSearch={setShowSearch} />
+            <p>Home Page</p>
+          </div >
+        )}
+      </div>
     ) : (
       <Load />
     )
