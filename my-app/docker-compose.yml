@@ -1,23 +1,18 @@
 services:
   frontend:
     build: ./frontend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=development
-    command: sh -c "npm install && npm run dev" # debugging an issue with docker command
+      - NODE_ENV=production
+    depends_on:
+      - backend
+
   backend:
     build: ./backend
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     ports:
       - "8000:8000"
-    environment:
-      - NODE_ENV=development
     env_file:
       - ./backend/.env
-    command: sh -c "npm install && node app.js"
+    environment:
+      - NODE_ENV=production
