@@ -31,7 +31,9 @@ async function searchYoutube(searchQuery) {
     title: he.decode(item.snippet.title),
     videoId: item.id.videoId,
     channelId: item.snippet.channelId,
-    channel: item.snippet.channelTitle
+    channel: item.snippet.channelTitle,
+    thumbnail: item.snippet.thumbnail,
+    publishedAt: item.snippet.publishedAt
   }));
 
   const videoIds = videos.map(item => item.videoId).join(',');
