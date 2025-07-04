@@ -21,9 +21,9 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow, setL
       });
       videoData.current = res.data;
       setShowSearch(true);
-      router.push(`/dashboard?search=${input}`);
+      router.push(`/dashboard?search=${encodeURIComponent(input)}`);
       console.log("storing in local storage with key: " + encodeURIComponent(input));
-      localStorage.setItem(encodeURIComponent(input), JSON.stringify(res.data));
+      sessionStorage.setItem(encodeURIComponent(input), JSON.stringify(res.data));
     } catch (error) {
       setErrorShow(true);
     } finally {

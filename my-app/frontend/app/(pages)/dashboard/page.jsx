@@ -22,7 +22,7 @@ export default function Home() {
 
   // old search results persist upon navigating back from /otherRoute to /dashboard?search
   React.useEffect(() => {
-    const prevLoad = JSON.parse(localStorage.getItem(encodeURIComponent(search)));
+    const prevLoad = JSON.parse(sessionStorage.getItem(encodeURIComponent(search)));
     console.log("retrieving from local storage with key: " + encodeURIComponent(search));
     if (prevLoad !== null) {
       setShowSearch(true);
