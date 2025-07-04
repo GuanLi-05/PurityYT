@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar"
 
 // Menu items.
-const items = [
+const itemsVideo = [
   {
     title: "Home",
     url: "/dashboard",
@@ -28,6 +28,9 @@ const items = [
     url: "/history",
     icon: Search,
   },
+]
+
+const itemsAdmin = [
   {
     title: "Statistics",
     url: "/statistics",
@@ -45,10 +48,27 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>_______________________________</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {itemsVideo.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>_______________________________</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {itemsAdmin.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>

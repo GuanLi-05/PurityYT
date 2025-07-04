@@ -46,13 +46,17 @@ async function searchYoutube(searchQuery) {
     },
   });
 
-
   resStat.data.items.forEach((item, i) => {
-    videos[i].viewCount = item.statistics.viewCount;
+    let view = item.statistics.viewCount;
+    if (view >= 1000) {
+      view = Math.trunc(view / 1000) + "k";
+    }
+    videos[i].viewCount = view;
+
     const isoTime = parse(item.contentDetails.duration);
     videos[i].duration = `
-      ${isoTime.hours.toString().padStart(2, '0')}:
-      ${isoTime.minutes.toString().padStart(2, '0')}:
+      ${isoTime.hours ? isoTime.hours.toString() + ":" : ""}
+      ${isoTime.minutes ? isoTime.minutes.toString() + ":" : ""}
       ${isoTime.seconds.toString().padStart(2, '0')}`
   });
 
@@ -69,6 +73,7 @@ searchRouter.post('/search', async (req, res) => {
     const videos = await searchYoutube(search);
     res.status(200).json({ videos });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Network Error. Please try again." });
   }
 })

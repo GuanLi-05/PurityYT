@@ -23,6 +23,7 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow }) {
     }
   }
 
+  // URL parse is still WIP
   return (
     theme === "dark" ? (
       <form onSubmit={handleSubmit} className="w-full max-w-xl">
@@ -49,7 +50,7 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow }) {
         <div className="flex overflow-hidden rounded-md bg-[#f0f0f0] border border-gray-300">
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search or Enter URL"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className="flex-grow rounded-l-md rounded-r-none border-none bg-transparent px-4 py-2 text-black placeholder-gray-500 focus:outline-none"
