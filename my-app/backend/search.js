@@ -33,7 +33,7 @@ async function searchYoutube(searchQuery) {
     videoId: item.id.videoId,
     channelId: item.snippet.channelId,
     channel: item.snippet.channelTitle,
-    thumbnail: item.snippet?.thumbnails?.high.url ?? item.snippet.thumbnails.medium.url,
+    thumbnail: item.snippet.thumbnails.medium.url,
     publishedAt: item.snippet.publishedAt
   }));
 
