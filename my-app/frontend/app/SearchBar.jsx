@@ -2,12 +2,14 @@ import React from "react"
 import axios from "axios";
 import { Search } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useRouter } from "next/navigation";
 
 const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function SearchBar({ videoData, setShowSearch, setErrorShow, setLoading }) {
   const [input, setInput] = React.useState("");
   const { theme } = useTheme()
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +21,9 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow, setL
       });
       videoData.current = res.data;
       setShowSearch(true);
+      router.push(`/dashboard?search=${input}`);
+      console.log("storing in local storage with key: " + encodeURIComponent(input));
+      localStorage.setItem(encodeURIComponent(input), JSON.stringify(res.data));
     } catch (error) {
       setErrorShow(true);
     } finally {

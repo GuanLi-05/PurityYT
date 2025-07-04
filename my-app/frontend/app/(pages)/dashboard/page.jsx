@@ -8,6 +8,7 @@ import SearchBar from '../../SearchBar'
 import SearchResults from "./SearchResults";
 import { Profile } from "../../Profile";
 import DashboardText from "./DashboardText";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
@@ -16,6 +17,18 @@ export default function Home() {
   const [showSearch, setShowSearch] = React.useState(false);
   const [errorShow, setErrorShow] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const searchParams = useSearchParams();
+  const search = searchParams.get('search');
+
+  // old search results persist upon navigating back from /otherRoute to /dashboard?search
+  React.useEffect(() => {
+    const prevLoad = JSON.parse(localStorage.getItem(encodeURIComponent(search)));
+    console.log("retrieving from local storage with key: " + encodeURIComponent(search));
+    if (prevLoad !== null) {
+      setShowSearch(true);
+      videoData.current = prevLoad;
+    }
+  }, [])
 
   React.useEffect(() => {
     if (status === "unauthenticated") {

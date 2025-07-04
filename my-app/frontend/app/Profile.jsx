@@ -28,7 +28,7 @@ export function Profile() {
     }
   }
 
-  // fix centering and dark/light mode
+  // fix centering and dark/light mode, setting preferences will have to be stored in db to persist -> will do this later
   const toggleLayout = () => {
     toast("Layout Updated", {
       description: "Switched display to Grid",
