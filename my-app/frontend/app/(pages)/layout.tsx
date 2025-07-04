@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import SessionProviderWrapper from "@/app/sessionWrapper";
 import "../globals.css";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
                 <div className="flex-1">
                   {children}
                 </div>
+                <Toaster />
               </div>
             </SidebarProvider>
           </SessionProviderWrapper>

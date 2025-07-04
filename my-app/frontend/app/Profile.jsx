@@ -16,6 +16,7 @@ import {
 import { User, Moon, Sun } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes"
+import { toast } from "sonner"
 
 export function Profile() {
   const { theme, setTheme } = useTheme()
@@ -27,6 +28,13 @@ export function Profile() {
     }
   }
 
+  const toggleLayout = () => {
+    toast("Layout Updated", {
+      description: "Switched display to Grid",
+    })
+  }
+
+  // Search More: Show filtered results, Lock layout settings
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -73,8 +81,17 @@ export function Profile() {
           <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
         </DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Search</DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onClick={toggleLayout}>Layout</DropdownMenuItem>
+              <DropdownMenuItem>Thumbnail</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>More...</DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/login' })}>
           Log out
