@@ -17,6 +17,7 @@ const API_KEY = process.env.YOUTUBE_API;
 const maxResults = 5;
 
 async function searchYoutube(searchQuery) {
+  /* Retrieve information from a seach (q) */
   const res = await axios.get('https://www.googleapis.com/youtube/v3/search', {
     params: {
       part: 'snippet',
@@ -32,21 +33,24 @@ async function searchYoutube(searchQuery) {
     videoId: item.id.videoId,
     channelId: item.snippet.channelId,
     channel: item.snippet.channelTitle,
-    thumbnail: item.snippet.thumbnails.medium.url,
+    thumbnail: item.snippet?.thumbnails?.high.url ?? item.snippet.thumbnails.medium.url,
     publishedAt: item.snippet.publishedAt
   }));
 
   const videoIds = videos.map(item => item.videoId).join(',');
 
+  /* Retrieve further statistics of a videoId */
   const resStat = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
     params: {
-      part: 'statistics,contentDetails',
+      part: 'snippet,statistics,contentDetails',
       id: videoIds,
       key: API_KEY,
     },
   });
 
   resStat.data.items.forEach((item, i) => {
+    videos[i].description = item.snippet.description;
+
     let view = item.statistics.viewCount;
     if (view >= 1000000000) {
       view = Math.trunc(view / 100000000) / 10 + "b";
