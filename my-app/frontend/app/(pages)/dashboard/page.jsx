@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { Suspense } from "react";
 import { useSession } from "next-auth/react";
 import Load from "../../Load";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,15 @@ import { Profile } from "../../Profile";
 import DashboardText from "./DashboardText";
 import { useSearchParams } from "next/navigation";
 
-export default function Home() {
+export default function SuspenseWrapper() {
+  return (
+    <Suspense fallback={<Load />}>
+      <Home />
+    </Suspense>
+  )
+}
+
+function Home() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const videoData = React.useRef([]);
@@ -28,7 +36,7 @@ export default function Home() {
       setShowSearch(true);
       videoData.current = prevLoad;
     }
-  }, [])
+  }, [search])
 
   React.useEffect(() => {
     if (status === "unauthenticated") {
@@ -55,6 +63,8 @@ export default function Home() {
     )
   )
 }
+
+
 
 function Nav({ videoData, setShowSearch, setErrorShow, setLoading }) {
   return (

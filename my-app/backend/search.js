@@ -48,8 +48,12 @@ async function searchYoutube(searchQuery) {
 
   resStat.data.items.forEach((item, i) => {
     let view = item.statistics.viewCount;
-    if (view >= 1000) {
-      view = Math.trunc(view / 1000) + "k";
+    if (view >= 1000000000) {
+      view = Math.trunc(view / 100000000) / 10 + "b";
+    } else if (view >= 1000000) {
+      view = Math.trunc(view / 100000) / 10 + "m";
+    } else if (view >= 1000) {
+      view = Math.trunc(view / 100) / 10 + "k";
     }
     videos[i].viewCount = view;
 
