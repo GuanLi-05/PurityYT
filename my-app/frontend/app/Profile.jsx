@@ -28,9 +28,14 @@ export function Profile() {
     }
   }
 
+  // fix centering and dark/light mode
   const toggleLayout = () => {
     toast("Layout Updated", {
       description: "Switched display to Grid",
+      action: {
+        label: "Undo",
+        onClick: () => console.log("Undo"),
+      },
     })
   }
 

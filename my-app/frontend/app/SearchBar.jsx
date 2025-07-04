@@ -5,12 +5,13 @@ import { useTheme } from "next-themes"
 
 const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-export default function SearchBar({ videoData, setShowSearch, setErrorShow }) {
+export default function SearchBar({ videoData, setShowSearch, setErrorShow, setLoading }) {
   const [input, setInput] = React.useState("");
   const { theme } = useTheme()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!input) return;
     try {
       const res = await axios.post(`${URL}/search`, {
@@ -20,6 +21,8 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow }) {
       setShowSearch(true);
     } catch (error) {
       setErrorShow(true);
+    } finally {
+      setLoading(false);
     }
   }
 

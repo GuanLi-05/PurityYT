@@ -15,6 +15,7 @@ export default function Home() {
   const videoData = React.useRef([]);
   const [showSearch, setShowSearch] = React.useState(false);
   const [errorShow, setErrorShow] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (status === "unauthenticated") {
@@ -25,8 +26,10 @@ export default function Home() {
   return (
     status === "authenticated" ? (
       <div>
-        <Nav videoData={videoData} setShowSearch={setShowSearch} setErrorShow={setErrorShow} />
-        {showSearch ? (
+        <Nav videoData={videoData} setShowSearch={setShowSearch} setErrorShow={setErrorShow} setLoading={setLoading} />
+        {loading ? (
+          <Load />
+        ) : showSearch ? (
           <SearchResults videoData={videoData} />
         ) : (
           <div>
@@ -40,12 +43,12 @@ export default function Home() {
   )
 }
 
-function Nav({ videoData, setShowSearch, setErrorShow }) {
+function Nav({ videoData, setShowSearch, setErrorShow, setLoading }) {
   return (
     <div className="h-auto flex flex-row justify-between items-center sticky top-0 z-10">
       <Logo />
       <div className="w-[39vw]">
-        <SearchBar videoData={videoData} setShowSearch={setShowSearch} setErrorShow={setErrorShow} />
+        <SearchBar videoData={videoData} setShowSearch={setShowSearch} setErrorShow={setErrorShow} setLoading={setLoading} />
       </div>
       <div className="mr-[1vw]">
         <Profile className="mr-4" />
