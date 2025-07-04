@@ -1,9 +1,4 @@
-import { useSearchParams } from 'next/navigation';
-
-export default function YoutubePlayer() {
-  const params = useSearchParams();
-  const videoId = params.get('v');
-
+export default function YoutubePlayer({ videoId }) {
   return (
     <iframe
       className="w-full max-w-[960px] aspect-video rounded-md shadow-lg"

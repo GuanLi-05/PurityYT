@@ -8,9 +8,22 @@ import Logo from '../../Logo';
 import { Profile } from '../../Profile';
 import { Button } from '../../../components/ui/button'
 import { Loader2Icon } from "lucide-react"
+import { useSearchParams } from 'next/navigation';
 
-export default function page() {
+export default function suspenseWrapper() {
+  return (
+    <Suspense fallback={<Load />}>
+      <Watch />
+    </Suspense>
+  )
+}
+
+function Watch() {
   const [showComments, setShowComments] = React.useState(false);
+  const params = useSearchParams();
+  const videoId = params.get('v');
+  console.log("id:" + videoId);
+  const data = JSON.parse(sessionStorage.getItem(videoId));
 
   return (
     <>
@@ -22,14 +35,12 @@ export default function page() {
       </div>
 
       <div className="flex flex-col items-center px-4 py-6 min-h-[calc(100vh-64px)">
-        <Suspense fallback={<Load />}>
-          <YoutubePlayer />
-        </Suspense>
+        <YoutubePlayer videoId={videoId} />
 
         <div className="mt-6 max-w-[960px] w-full p-4 rounded-md shadow">
-          <h2 className="text-xl font-semibold mb-2">Video Title</h2>
+          <h2 className="text-xl font-semibold mb-2">{data.title || "Video Title"}</h2>
           <p className="text-gray-700">
-            Video Description
+            {data.description || "Video Description"}
           </p>
         </div>
 

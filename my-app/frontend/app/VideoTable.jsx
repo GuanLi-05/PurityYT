@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table"
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { title } from "process";
 import React from "react";
 
 export function VideoTable({ videoData }) {
@@ -42,6 +43,11 @@ export function VideoTable({ videoData }) {
     return "just now";
   };
 
+  const redirect = (video) => {
+    sessionStorage.setItem(video.videoId, JSON.stringify({ description: video.description, title: video.title }));
+    router.push(`/watch?v=${video.videoId}`);
+  };
+
   console.log(videoData);
   const router = useRouter();
   return (
@@ -68,11 +74,11 @@ export function VideoTable({ videoData }) {
               }}
               onMouseLeave={() => setShowHover(false)}
             >
-              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)}>{video.title}</TableCell>
-              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-center">{video.channel}</TableCell>
-              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-center">{video.duration}</TableCell>
-              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-center">{video.viewCount}</TableCell>
-              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-center">{publishedAgo(video.publishedAt)}</TableCell>
+              <TableCell onClick={() => redirect(video)}>{video.title}</TableCell>
+              <TableCell onClick={() => redirect(video)} className="text-center">{video.channel}</TableCell>
+              <TableCell onClick={() => redirect(video)} className="text-center">{video.duration}</TableCell>
+              <TableCell onClick={() => redirect(video)} className="text-center">{video.viewCount}</TableCell>
+              <TableCell onClick={() => redirect(video)} className="text-center">{publishedAgo(video.publishedAt)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
