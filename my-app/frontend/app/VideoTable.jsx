@@ -4,14 +4,23 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import React from "react";
 
 export function VideoTable({ videoData }) {
+  const [coords, setCoords] = React.useState({ x: 0, y: 0 });
+  const [showHover, setShowHover] = React.useState(false);
+  const thumbnail = React.useRef("");
+
+  const updateCoords = (e) => {
+    setCoords({ x: e.clientX, y: e.clientY });
+  }
+
   const publishedAgo = (date) => {
     const now = new Date();
     const published = new Date(date);
@@ -33,30 +42,59 @@ export function VideoTable({ videoData }) {
     return "just now";
   };
 
+  console.log(videoData);
   const router = useRouter();
   return (
-    <Table>
-      <TableCaption><br />End of Results.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[700px]">Title</TableHead>
-          <TableHead>Channel</TableHead>
-          <TableHead>Duration</TableHead>
-          <TableHead>Views</TableHead>
-          <TableHead>Published</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {videoData.current.videos.map((video) => (
-          <TableRow key={video.videoId}>
-            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="font-medium">{video.title}</TableCell>
-            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)}>{video.channel}</TableCell>
-            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)}>{video.duration}</TableCell>
-            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-right">{video.viewCount}</TableCell>
-            <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-right">{publishedAgo(video.publishedAt)}</TableCell>
+    <>
+      {showHover && <HoverThumbnail thumbnail={thumbnail.current} coords={coords} />}
+      <Table onMouseMove={updateCoords}>
+        <TableCaption><br />End of Results.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Title</TableHead>
+            <TableHead className="text-center">Channel</TableHead>
+            <TableHead className="text-center">Duration</TableHead>
+            <TableHead className="text-center">Views</TableHead>
+            <TableHead className="text-center">Published</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {videoData.current.videos.map((video) => (
+            <TableRow
+              key={video.videoId}
+              onMouseEnter={() => {
+                setShowHover(true);
+                thumbnail.current = video.thumbnail;
+              }}
+              onMouseLeave={() => setShowHover(false)}
+            >
+              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)}>{video.title}</TableCell>
+              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-center">{video.channel}</TableCell>
+              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-center">{video.duration}</TableCell>
+              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-center">{video.viewCount}</TableCell>
+              <TableCell onClick={() => router.push(`/watch?v=${video.videoId}`)} className="text-center">{publishedAgo(video.publishedAt)}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   )
 }
+
+function HoverThumbnail({ thumbnail, coords }) {
+  return (
+    <div
+      className="fixed top-[]"
+      style={{
+        top: coords.y,
+        left: coords.x,
+        transform: "translate(10px, 10px)",
+        pointerEvents: "none",
+        zIndex: 1000,
+      }}
+    >
+      <Image src={thumbnail} alt="thumbnail" width={320} height={180} />
+    </div>
+  )
+}
+

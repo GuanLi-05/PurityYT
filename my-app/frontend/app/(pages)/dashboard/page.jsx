@@ -25,15 +25,7 @@ export default function Home() {
   return (
     status === "authenticated" ? (
       <div>
-        <div className="h-auto flex flex-row justify-between items-center sticky top-0 z-10">
-          <Logo />
-          <div className="w-[39vw]">
-            <SearchBar videoData={videoData} setShowSearch={setShowSearch} setErrorShow={setErrorShow} />
-          </div>
-          <div className="mr-[1vw]">
-            <Profile className="mr-4" />
-          </div>
-        </div>
+        <Nav videoData={videoData} setShowSearch={setShowSearch} setErrorShow={setErrorShow} />
         {showSearch ? (
           <SearchResults videoData={videoData} />
         ) : (
@@ -45,5 +37,19 @@ export default function Home() {
     ) : (
       <Load />
     )
+  )
+}
+
+function Nav({ videoData, setShowSearch, setErrorShow }) {
+  return (
+    <div className="h-auto flex flex-row justify-between items-center sticky top-0 z-10">
+      <Logo />
+      <div className="w-[39vw]">
+        <SearchBar videoData={videoData} setShowSearch={setShowSearch} setErrorShow={setErrorShow} />
+      </div>
+      <div className="mr-[1vw]">
+        <Profile className="mr-4" />
+      </div>
+    </div>
   )
 }
