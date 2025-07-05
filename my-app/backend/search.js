@@ -49,23 +49,23 @@ async function searchYoutube(searchQuery) {
   });
 
   resStat.data.items.forEach((item, i) => {
-    videos[i].description = item.snippet.description;
+    videos[i].description = he.decode(item.snippet.description);
 
     let view = item.statistics.viewCount;
     if (view >= 1000000000) {
-      view = Math.trunc(view / 100000000) / 10 + "b";
+      view = Math.trunc(view / 100000000) / 10 + "B";
     } else if (view >= 1000000) {
-      view = Math.trunc(view / 100000) / 10 + "m";
+      view = Math.trunc(view / 100000) / 10 + "M";
     } else if (view >= 1000) {
-      view = Math.trunc(view / 100) / 10 + "k";
+      view = Math.trunc(view / 100) / 10 + "K";
     }
     videos[i].viewCount = view;
 
     const isoTime = parse(item.contentDetails.duration);
     videos[i].duration = `
-      ${isoTime.hours ? isoTime.hours.toString() + ":" : ""}
-      ${isoTime.minutes ? isoTime.minutes.toString() + ":" : ""}
-      ${isoTime.seconds.toString().padStart(2, '0')}`
+      ${isoTime.hours ? isoTime.hours.toString() + "h" : ""}
+      ${isoTime.minutes ? (isoTime.hours ? (isoTime.minutes.toString().padStart(2, '0')) : (isoTime.minutes.toString())) + "m" : ""}
+      ${isoTime.seconds.toString().padStart(2, '0') + "s"}`
   });
 
   return videos;

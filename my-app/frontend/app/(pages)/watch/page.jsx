@@ -7,7 +7,7 @@ import Load from '../../Load';
 import Logo from '../../Logo';
 import { Profile } from '../../Profile';
 import { Button } from '../../../components/ui/button'
-import { Loader2Icon } from "lucide-react"
+import { Loader2Icon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 import { useSearchParams } from 'next/navigation';
 
 export default function suspenseWrapper() {
@@ -20,10 +20,12 @@ export default function suspenseWrapper() {
 
 function Watch() {
   const [showComments, setShowComments] = React.useState(false);
+  const [collapse, setCollapse] = React.useState(true);
+  const [data, setData] = React.useState({});
   const params = useSearchParams();
   const videoId = params.get('v');
-  console.log("id:" + videoId);
-  const data = JSON.parse(sessionStorage.getItem(videoId));
+
+  React.useEffect(() => setData(JSON.parse(sessionStorage.getItem(videoId))), [])
 
   return (
     <>
@@ -37,9 +39,12 @@ function Watch() {
       <div className="flex flex-col items-center px-4 py-6 min-h-[calc(100vh-64px)">
         <YoutubePlayer videoId={videoId} />
 
-        <div className="mt-6 max-w-[960px] w-full p-4 rounded-md shadow">
+        <div className="mt-6 max-w-[960px] w-full p-4 rounded-md shadow overflow-hidden relative" style={collapse ? { height: "5.5rem" } : undefined}>
           <h2 className="text-xl font-semibold mb-2">{data.title || "Video Title"}</h2>
-          <p className="text-gray-700">
+          <p className="text-gray-700 whitespace-pre-wrap">
+            <Button variant="secondary" size="icon" className="size-8 absolute right-2 top-5.5" onClick={() => setCollapse(prev => !prev)}>
+              {collapse ? <ChevronDownIcon /> : <ChevronUpIcon />}
+            </Button>
             {data.description || "Video Description"}
           </p>
         </div>
