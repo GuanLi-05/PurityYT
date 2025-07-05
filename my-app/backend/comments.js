@@ -24,20 +24,29 @@ async function retrieveComments(videoId) {
       key: API_KEY,
     },
   });
-  console.log(res.data);
+
+  const comments = res.data.items.map(item => ({
+    text: item.snippet.topLevelComment.snippet.textOriginal,
+    author: item.snippet.topLevelComment.snippet.authorDisplayName,
+    likes: item.snippet.topLevelComment.snippet.likeCount,
+    publishedAt: item.snippet.topLevelComment.snippet.publishedAt,
+    updatedAt: item.snippet.topLevelComment.snippet.updatedAt
+  }));
+
+  return comments;
 };
 
 ///////////////////////////////////
 // Routes
 ///////////////////////////////////
 
-commentsRouter.get('/comments:videoId', async (req, res) => {
+commentsRouter.get('/comments/:videoId', async (req, res) => {
   const videoId = req.params.videoId;
   try {
     const comments = await retrieveComments(videoId);
-    res.send(200).json({ comments: comments })
+    res.status(200).json({ comments });
   } catch (error) {
     console.log(error);
-    res.send(500).json({ error: "Network Error. Please try again." });
+    res.status(500).json({ error: "Network Error. Please try again." });
   }
 })

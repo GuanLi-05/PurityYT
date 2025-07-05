@@ -2,6 +2,7 @@
 
 import React from 'react';
 import YoutubePlayer from '../../YoutubePlayer';
+import axios from 'axios';
 import { Suspense } from "react";
 import Load from '../../Load';
 import Logo from '../../Logo';
@@ -9,6 +10,8 @@ import { Profile } from '../../Profile';
 import { Button } from '../../../components/ui/button'
 import { Loader2Icon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 import { useSearchParams } from 'next/navigation';
+
+const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function suspenseWrapper() {
   return (
@@ -22,10 +25,23 @@ function Watch() {
   const [showComments, setShowComments] = React.useState(false);
   const [collapse, setCollapse] = React.useState(true);
   const [data, setData] = React.useState({});
+  const [commentLoad, setCommentLoad] = React.useState(false);
   const params = useSearchParams();
   const videoId = params.get('v');
 
-  React.useEffect(() => setData(JSON.parse(sessionStorage.getItem(videoId))), [])
+  React.useEffect(() => setData(JSON.parse(sessionStorage.getItem(videoId))), []);
+
+  const handleComments = async () => {
+    setShowComments((prev) => !prev);
+    if (showComments === true) return;
+    try {
+      alert("clicked")
+      const res = await axios.get(`${URL}/comments/${videoId}`)
+      console.log(res.data.comments);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -49,8 +65,8 @@ function Watch() {
           </p>
         </div>
 
-        <Button variant="ghost" onClick={() => setShowComments((prev) => !prev)}>
-          <Loader2Icon className="animate-spin" />
+        <Button className="mt-4" variant="ghost" onClick={handleComments}>
+          {commentLoad && <Loader2Icon className="animate-spin" />}
           {showComments ? "Hide Comments" : "Show Comments"}
         </Button>
 
