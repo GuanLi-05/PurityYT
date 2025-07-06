@@ -9,8 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { title } from "process";
 import React from "react";
 
 export function VideoTable({ videoData }) {
@@ -48,7 +46,6 @@ export function VideoTable({ videoData }) {
   };
 
   console.log(videoData);
-  const router = useRouter();
   return (
     <>
       {showHover && <HoverThumbnail thumbnail={thumbnail.current} coords={coords} />}
