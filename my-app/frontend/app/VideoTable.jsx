@@ -44,8 +44,7 @@ export function VideoTable({ videoData }) {
   };
 
   const redirect = (video) => {
-    sessionStorage.setItem(video.videoId, JSON.stringify({ description: video.description, title: video.title }));
-    router.push(`/watch?v=${video.videoId}`);
+    localStorage.setItem(video.videoId, JSON.stringify({ description: video.description, title: video.title }));
   };
 
   console.log(videoData);
@@ -74,11 +73,21 @@ export function VideoTable({ videoData }) {
               }}
               onMouseLeave={() => setShowHover(false)}
             >
-              <TableCell onClick={() => redirect(video)}>{video.title}</TableCell>
-              <TableCell onClick={() => redirect(video)} className="text-center">{video.channel}</TableCell>
-              <TableCell onClick={() => redirect(video)} className="text-center">{video.duration}</TableCell>
-              <TableCell onClick={() => redirect(video)} className="text-center">{video.viewCount}</TableCell>
-              <TableCell onClick={() => redirect(video)} className="text-center">{publishedAgo(video.publishedAt)}</TableCell>
+              <TableCell>
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{video.title}</a>
+              </TableCell>
+              <TableCell className="text-center">
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{video.channel}</a>
+              </TableCell>
+              <TableCell className="text-center">
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{video.duration}</a>
+              </TableCell>
+              <TableCell className="text-center">
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{video.viewCount}</a>
+              </TableCell>
+              <TableCell className="text-center">
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{publishedAgo(video.publishedAt)}</a>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
