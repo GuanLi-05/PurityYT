@@ -14,9 +14,8 @@ export const searchRouter = express.Router();
 ///////////////////////////////////
 
 const API_KEY = process.env.YOUTUBE_API;
-const maxResults = 5;
 
-async function searchYoutube(searchQuery) {
+async function searchYoutube(searchQuery, maxResults) {
   /* Retrieve information from a seach (q) */
   const res = await axios.get('https://www.googleapis.com/youtube/v3/search', {
     params: {
@@ -76,9 +75,9 @@ async function searchYoutube(searchQuery) {
 ///////////////////////////////////
 
 searchRouter.post('/search', async (req, res) => {
-  const { search } = req.body;
+  const { search, maxResults } = req.body;
   try {
-    const videos = await searchYoutube(search);
+    const videos = await searchYoutube(search, maxResults);
     res.status(200).json({ videos });
   } catch (error) {
     console.log(error);

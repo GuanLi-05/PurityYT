@@ -17,7 +17,8 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow, setL
     if (!input) return;
     try {
       const res = await axios.post(`${URL}/search`, {
-        search: input
+        search: input,
+        maxResults: 10
       });
       videoData.current = res.data;
       setShowSearch(true);

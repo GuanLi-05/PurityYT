@@ -12,10 +12,10 @@ export default function Logo() {
   return (
     <div onClick={handleClick}>
       <div className="dark:block hidden">
-        <Image src={DarkLogoImage} alt="PurityYT" width={150} placeholder="blur" />
+        <Image src={DarkLogoImage} alt="PurityYT" width={150} />
       </div>
       <div className="block dark:hidden">
-        <Image src={LogoImage} alt="PurityYT" width={150} placeholder="blur" />
+        <Image src={LogoImage} alt="PurityYT" width={150} />
       </div>
     </div>
   )
