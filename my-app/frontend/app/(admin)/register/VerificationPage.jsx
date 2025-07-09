@@ -9,6 +9,8 @@ import { Transition } from '@headlessui/react';
 import { useRouter } from "next/navigation"
 import { signIn } from "next-auth/react";
 
+const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export default function VerificationPage({ storeEmail, storeFname, storeLname, storePassword }) {
   const [showAlert, setShowAlert] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
@@ -21,7 +23,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
   const sendCode = async () => {
     setLoading(true);
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/email/verify/send`, {
+      const res = await axios.post(`${URL}/email/verify/send`, {
         "email": storeEmail.current,
       })
       setShowAlert("success");
@@ -44,7 +46,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
       return;
     }
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/email/verify/confirm`, {
+      await axios.post(`${URL}/email/verify/confirm`, {
         email: storeEmail.current,
         code: code
       })
@@ -59,7 +61,7 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
   /* Register user into DB */
   const registerUser = async () => {
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/register`, {
+      const res = await axios.post(`${URL}/register`, {
         fname: storeFname.current,
         lname: storeLname.current,
         email: storeEmail.current,
@@ -84,9 +86,11 @@ export default function VerificationPage({ storeEmail, storeFname, storeLname, s
 
     if (res.error) {
       if (res.error === "CredentialsSignin") {
-        setAlertMessage("Incorrect email or password.");
+        setShowAlert("error");
+        alertMessage.current = "Incorrect email or password.";
       } else {
-        setAlertMessage(res.error + ": Log in denied.");
+        setShowAlert("error");
+        alertMessage.current = res.error + ": Log in denied.";
       }
       setAlertShow(true);
     } else {

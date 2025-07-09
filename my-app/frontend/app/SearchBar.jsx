@@ -4,6 +4,8 @@ import { Search } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation";
 
+const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export default function SearchBar({ videoData, setShowSearch, setErrorShow, setLoading }) {
   const [input, setInput] = React.useState("");
   const { theme } = useTheme()
@@ -12,10 +14,10 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow, setL
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("URL: " + process.env.NEXT_PUBLIC_BACKEND_URL);
+    console.log("URL: " + URL);
     if (!input) return;
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search`, {
+      const res = await axios.post(`${URL}/search`, {
         search: input,
         maxResults: 50
       });
