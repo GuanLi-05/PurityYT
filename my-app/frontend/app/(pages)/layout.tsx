@@ -42,10 +42,14 @@ export default function RootLayout({
             <SidebarProvider>
               <div className="flex min-h-screen w-full">
                 <AppSidebar />
-                <SidebarTrigger className="mt-[25px] ml-1.5" />
-                <div className="flex-1">
-                  {children}
+
+                {/* Make trigger sticky to top-left */}
+                <div className="sticky top-[25px] z-50 self-start ml-1.5">
+
+                  <SidebarTrigger />
                 </div>
+
+                <div className="flex-1">{children}</div>
                 <Toaster />
               </div>
             </SidebarProvider>

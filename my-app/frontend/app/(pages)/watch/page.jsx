@@ -104,7 +104,7 @@ function Watch() {
       <div className="flex flex-col items-center px-4 py-6 min-h-[calc(100vh-64px)">
         <YoutubePlayer videoId={videoId} />
 
-        <div className="mt-6 max-w-[960px] w-full p-4 rounded-md shadow overflow-hidden relative" style={collapse ? { height: "5.4rem" } : undefined}>
+        <div className="mt-6 max-w-[960px] w-full p-4 rounded-md shadow overflow-hidden relative" style={collapse ? { height: "5.15rem" } : undefined}>
           <h2 className="text-xl font-semibold mb-2">{data.title}</h2>
           <p className="text-gray-500 whitespace-pre-wrap">
             <Button variant="secondary" size="icon" className="size-8 absolute right-2 top-5.5" onClick={() => setCollapse(prev => !prev)}>

@@ -14,11 +14,12 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow, setL
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log("URL: " + URL);
     if (!input) return;
     try {
       const res = await axios.post(`${URL}/search`, {
         search: input,
-        maxResults: 10
+        maxResults: 50
       });
       videoData.current = res.data;
       setShowSearch(true);

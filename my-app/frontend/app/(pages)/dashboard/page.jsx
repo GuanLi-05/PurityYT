@@ -64,11 +64,9 @@ function Home() {
   )
 }
 
-
-
 function Nav({ videoData, setShowSearch, setErrorShow, setLoading }) {
   return (
-    <div className="h-auto flex flex-row justify-between items-center sticky top-0 z-10">
+    <div className="h-auto flex flex-row justify-between items-center sticky top-0 z-10 bg-background">
       <Logo />
       <div className="w-[39vw]">
         <SearchBar videoData={videoData} setShowSearch={setShowSearch} setErrorShow={setErrorShow} setLoading={setLoading} />
