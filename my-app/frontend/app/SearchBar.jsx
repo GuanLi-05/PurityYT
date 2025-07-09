@@ -15,6 +15,7 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow, setL
     e.preventDefault();
     setLoading(true);
     console.log("URL: " + URL);
+    console.log("Database: " + process.env.DATABASE_URL);
     if (!input) return;
     try {
       const res = await axios.post(`${URL}/search`, {

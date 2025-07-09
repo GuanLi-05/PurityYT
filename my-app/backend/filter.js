@@ -1,0 +1,13 @@
+import express from 'express'
+
+///////////////////////////////////
+// Route exporting for app.js
+///////////////////////////////////
+
+export const filterResultsRouter = express.Router();
+export const filterVideoRouter = express.Router();
+
+///////////////////////////////////
+// Routes
+///////////////////////////////////
+
