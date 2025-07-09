@@ -10,8 +10,6 @@ import {
 import Link from 'next/link';
 import { signIn } from "next-auth/react";
 
-const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-
 export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyShow, storeEmail, storeFname, storeLname, storePassword }) {
   const firstName = React.useRef();
   const lastName = React.useRef();
@@ -99,7 +97,7 @@ export default function RegisterForm({ setAlertShow, setAlertMessage, setVerifyS
 
   const checkUniqueEmail = async (email) => {
     try {
-      const res = await axios.post(`${URL}/email/unique`, {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/email/unique`, {
         email: email
       })
       return res.data.unique;

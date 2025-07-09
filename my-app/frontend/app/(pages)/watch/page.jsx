@@ -11,8 +11,6 @@ import { Button } from '../../../components/ui/button'
 import { Loader2Icon, ChevronDownIcon, ChevronUpIcon, ThumbsUpIcon } from "lucide-react"
 import { useSearchParams } from 'next/navigation';
 
-const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-
 export default function suspenseWrapper() {
   return (
     <Suspense fallback={<Load />}>
@@ -61,7 +59,7 @@ function Watch() {
     }
     try {
       setCommentLoad(true);
-      const res = await axios.get(`${URL}/comments/${videoId}`)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/comments/${videoId}`)
       commentData.current = res.data.comments;
       console.log(commentData.current);
       setCommentLoad(false);
