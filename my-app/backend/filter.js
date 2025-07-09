@@ -11,3 +11,7 @@ export const filterVideoRouter = express.Router();
 // Routes
 ///////////////////////////////////
 
+filterVideoRouter.post('/filter/video', (req, res) => {
+  const { instruction } = req.body;
+  console.log("i: " + instruction);
+})

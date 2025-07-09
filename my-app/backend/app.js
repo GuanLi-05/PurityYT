@@ -5,7 +5,7 @@ import { handleRegisterRouter } from './registration.js';
 import { searchRouter } from './search.js';
 import dotenv from 'dotenv'
 import { commentsRouter } from './comments.js';
-import { filterResultsRouter } from './filter.js';
+import { filterResultsRouter, filterVideoRouter } from './filter.js';
 
 dotenv.config();
 
@@ -21,6 +21,7 @@ app.use('/', checkUniqueEmail);
 app.use('/', searchRouter);
 app.use('/', commentsRouter);
 app.use('/', filterResultsRouter);
+app.use('/', filterVideoRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
