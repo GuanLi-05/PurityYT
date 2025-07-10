@@ -54,6 +54,7 @@ function Home() {
           <SearchResults videoData={videoData} />
         ) : (
           <div>
+            <br /><br />
             <DashboardText error={errorShow} />
           </div>
         )}

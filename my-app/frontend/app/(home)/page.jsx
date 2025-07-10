@@ -2,8 +2,9 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import CarouselHome from "../Carousel";
+import CarouselHome from "./Carousel";
 import Load from "../Load";
+import { HeroSectionOne } from "./HomeText";
 
 export default function Home() {
   const router = useRouter();
@@ -20,7 +21,8 @@ export default function Home() {
     status === "loading" ? (
       <Load />
     ) : (status === "unauthenticated" && <>
-      <CarouselHome />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <HeroSectionOne />
     </>)
   )
 }
