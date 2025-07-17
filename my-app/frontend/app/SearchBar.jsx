@@ -13,10 +13,14 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow, setL
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    console.log("URL: " + URL);
     if (!input) return;
+    const vId = extractYouTubeVideoId(input);
+    if (vId) {
+      router.push(`/watch?v=${vId}`)
+      return;
+    }
     try {
+      setLoading(true);
       const res = await axios.post(`${URL}/search`, {
         search: input,
         maxResults: 50
@@ -31,6 +35,13 @@ export default function SearchBar({ videoData, setShowSearch, setErrorShow, setL
     } finally {
       setLoading(false);
     }
+  }
+
+  function extractYouTubeVideoId(url) {
+    const regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|live\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+
+    const match = url.match(regex)
+    return match ? match[1] : null
   }
 
   // URL parse is still WIP
