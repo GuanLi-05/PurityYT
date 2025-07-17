@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "PurityYT",
-  description: "A Pure version of Youtube",
+  description: "A pure video experience",
 };
 
 export default function RootLayout({
