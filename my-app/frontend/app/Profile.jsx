@@ -28,15 +28,28 @@ export function Profile() {
     }
   }
 
-  // fix centering and dark/light mode, setting preferences will have to be stored in db to persist -> will do this later
+  // fix centering and dark/light mode, setting preferences will have to be stored in localstorage to persist -> will do this later
   const toggleLayout = () => {
-    toast("Layout Updated", {
-      description: "Switched display to Grid",
-      action: {
-        label: "Undo",
-        onClick: () => console.log("Undo"),
-      },
-    })
+    const layout = localStorage.getItem("layout");
+    if (layout === "table") {
+      toast("Layout Updated", {
+        description: "Switched display to Grid",
+        action: {
+          label: "Undo",
+          onClick: () => localStorage.setItem("layout", "table"),
+        },
+      });
+      localStorage.setItem("layout", "grid");
+    } else {
+      toast("Layout Updated", {
+        description: "Switched display to Table",
+        action: {
+          label: "Undo",
+          onClick: () => localStorage.setItem("layout", "grid"),
+        },
+      });
+      localStorage.setItem("layout", "table");
+    }
   }
 
   // Search More: Show filtered results, Lock layout settings

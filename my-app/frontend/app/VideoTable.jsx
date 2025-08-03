@@ -71,19 +71,19 @@ export function VideoTable({ videoData }) {
               onMouseLeave={() => setShowHover(false)}
             >
               <TableCell>
-                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{video.title}</a>
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} onContextMenu={() => redirect(video)} className="block w-full h-full">{video.title}</a>
               </TableCell>
               <TableCell className="text-center">
-                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{video.channel}</a>
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} onContextMenu={() => redirect(video)} className="block w-full h-full">{video.channel}</a>
               </TableCell>
               <TableCell className="text-center">
-                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{video.duration}</a>
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} onContextMenu={() => redirect(video)} className="block w-full h-full">{video.duration}</a>
               </TableCell>
               <TableCell className="text-center">
-                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{video.viewCount}</a>
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} onContextMenu={() => redirect(video)} className="block w-full h-full">{video.viewCount}</a>
               </TableCell>
               <TableCell className="text-center">
-                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} className="block w-full h-full">{publishedAgo(video.publishedAt)}</a>
+                <a href={`/watch?v=${video.videoId}`} onClick={() => redirect(video)} onContextMenu={() => redirect(video)} className="block w-full h-full">{publishedAgo(video.publishedAt)}</a>
               </TableCell>
             </TableRow>
           ))}

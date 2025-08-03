@@ -26,12 +26,14 @@ function Watch() {
   const [collapse, setCollapse] = React.useState(true);
   const [data, setData] = React.useState({});
   const [commentLoad, setCommentLoad] = React.useState(false);
+  const [allowed, setAllowed] = React.useState(false);
   const commentData = React.useRef(null);
   const params = useSearchParams();
   const videoId = params.get('v');
 
   /* Video Title and Description are initally saved using local storage to persist across tabs. 
    * If currently stored locally, parse information and switch to session storage 
+   * Little bit iffy but icbb to change the backend
    */
   React.useEffect(() => {
     let retrieve = localStorage.getItem(videoId);
@@ -102,7 +104,7 @@ function Watch() {
       </div>
 
       <div className="flex flex-col items-center px-4 py-6 min-h-[calc(100vh-64px)">
-        <YoutubePlayer videoId={videoId} />
+        {allowed ? <YoutubePlayer videoId={videoId} /> : <><YoutubePlayer videoId={videoId} /> <div>Content Restricted</div> </>}
 
         <div className="mt-6 max-w-[960px] w-full p-4 rounded-md shadow overflow-hidden relative" style={collapse ? { height: "5.15rem" } : undefined}>
           <h2 className="text-xl font-semibold mb-2">{data.title}</h2>

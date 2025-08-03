@@ -2,6 +2,7 @@ import express from "express"
 import axios from 'axios';
 import he from 'he';
 import { parse } from 'iso8601-duration';
+import { filterCall } from "./openai.js";
 
 ///////////////////////////////////
 // Route exporting for app.js
@@ -30,10 +31,6 @@ async function searchYoutube(searchQuery, maxResults) {
   const videos = res.data.items.filter(item => item.id.videoId).map(item => ({
     title: he.decode(item.snippet.title),
     videoId: item.id.videoId,
-    channelId: item.snippet.channelId,
-    channel: item.snippet.channelTitle,
-    thumbnail: item.snippet.thumbnails.medium.url,
-    publishedAt: item.snippet.publishedAt
   }));
 
   const videoIds = videos.map(item => item.videoId).join(',');
@@ -64,8 +61,21 @@ async function searchYoutube(searchQuery, maxResults) {
     videos[i].duration = `
       ${isoTime.hours ? isoTime.hours.toString() + "h" : ""}
       ${isoTime.minutes ? (isoTime.hours ? (isoTime.minutes.toString().padStart(2, '0')) : (isoTime.minutes.toString())) + "m" : ""}
-      ${isoTime.seconds.toString().padStart(2, '0') + "s"}`
+      ${isoTime.seconds.toString().padStart(2, '0') + "s"}
+    `
+    videos[i].channelId = item.snippet.channelId;
+    videos[i].channel = item.snippet.channelTitle;
+    videos[i].thumbnail = item.snippet.thumbnails.medium.url;
+    videos[i].publishedAt = item.snippet.publishedAt;
+    videos[i].allowed = true;
   });
+
+  const formattedString = videos.map((item, i) => `${i}. ${item.title}`).join('\n');
+  const resTest = await filterCall(formattedString);
+  console.log(resTest.filter);
+  resTest.filter.forEach(item => {
+    videos[item.listIndex].allowed = false;
+  })
 
   return videos;
 }

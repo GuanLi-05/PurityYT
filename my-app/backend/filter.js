@@ -15,3 +15,8 @@ filterVideoRouter.post('/filter/video', (req, res) => {
   const { instruction } = req.body;
   console.log("i: " + instruction);
 })
+
+filterResultsRouter.post('/filter/results', (req, res) => {
+  const { instruction } = req.body;
+  console.log("i: " + instruction);
+})
